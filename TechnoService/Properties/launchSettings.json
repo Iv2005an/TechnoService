@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TechnoService (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TechnoService (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
