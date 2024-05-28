@@ -1,9 +1,6 @@
-using Microsoft.UI.Xaml;
+namespace TechnoService;
 
-namespace TechnoService
+public sealed partial class MainWindow : WinUIEx.WindowEx
 {
-    public sealed partial class MainWindow : Window
-    {
-        public MainWindow() => InitializeComponent();
-    }
+    public MainWindow() => InitializeComponent();
 }
