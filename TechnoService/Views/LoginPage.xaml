@@ -11,10 +11,10 @@
 
     <StackPanel Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
         <TextBlock Text="Вход" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-        <TextBox PlaceholderText="Логин" MaxLength="50"/>
-        <PasswordBox PlaceholderText="Пароль" MaxLength="50"/>
-        <Button Content="Войти" 
-                Click="LoginButton_Click"
+        <TextBox PlaceholderText="Логин" TextChanging="OnTextChanging" MaxLength="50"/>
+        <PasswordBox PlaceholderText="Пароль" PasswordChanging="OnPasswordChanging" MaxLength="50"/>
+        <Button Content="Войти"
+                Click="OnLoginButtonClick"
                 Style="{ThemeResource AccentButtonStyle}" 
                 HorizontalAlignment="Stretch"/>
     </StackPanel>
