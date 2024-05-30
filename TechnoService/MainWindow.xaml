@@ -8,6 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winex="using:WinUIEx"
     mc:Ignorable="d"
+    Title="Техносервис"
+    Width="1280"
+    Height="720"
     MinWidth="640"
-    MinHeight="480"
-    Title="Техносервис"/>
+    MinHeight="480">
+
+    <Frame x:Name="MainFrame"/>
+</winex:WindowEx>

@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 
 namespace TechnoService;
 
@@ -12,7 +11,6 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         m_window = new MainWindow();
-        m_window.AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
         m_window.Activate();
     }
 }

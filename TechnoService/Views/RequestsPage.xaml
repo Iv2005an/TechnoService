@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TechnoService.Views.RequestsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TechnoService.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel>
+        <CommandBar>
+            <AppBarButton Icon="Add" Label="Добавить заявку"/>
+            <CommandBar.Content>
+                <TextBlock Text="Заявки" Margin="12,14"/>
+            </CommandBar.Content>
+        </CommandBar>
+        <controls:DataGrid ItemsSource="{x:Bind Requests}" AutoGenerateColumns="False">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <controls:DataGridTextColumn Header="Дата добавления" Binding="{Binding StartDate}"/>
+                <controls:DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}"/>
+                <controls:DataGridTextColumn Header="Исполнитель" Binding="{Binding ExecutorName}"/>
+                <controls:DataGridTextColumn Header="Устройство" Binding="{Binding Device}"/>
+                <controls:DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
+                <controls:DataGridTextColumn Header="Описание" Binding="{Binding FaultDescription}"/>
+                <controls:DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+    </StackPanel>
+</Page>
