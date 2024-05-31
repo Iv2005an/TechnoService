@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml.Controls;
+п»їusing Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 using System;
 
@@ -12,16 +12,16 @@ public sealed partial class StaffPage : Page
         Staff.Add(new Executor
         {
             Id = 0,
-            Name = $"Иванов Администратор Иванович",
-            Type = "Администратор",
+            Name = $"РРІР°РЅРѕРІ РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ РРІР°РЅРѕРІРёС‡",
+            Type = "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ",
         });
         for (int i = 1; i < 10; i++)
         {
             Staff.Add(new Executor
             {
                 Id = i,
-                Name = $"Иванов Исполнитель{i} Иванович",
-                Type = "Исполнитель",
+                Name = $"РРІР°РЅРѕРІ РСЃРїРѕР»РЅРёС‚РµР»СЊ{i} РРІР°РЅРѕРІРёС‡",
+                Type = "РСЃРїРѕР»РЅРёС‚РµР»СЊ",
             });
         }
     }

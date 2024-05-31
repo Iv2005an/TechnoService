@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+п»їusing Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -16,12 +16,12 @@ public sealed partial class RequestsPage : Page
             {
                 Id = i,
                 StartDate = DateTime.Now,
-                ClientName = "Иванов Клиент Иванович",
-                ExecutorName = "Иванов Исполнитель Иванович",
+                ClientName = "РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡",
+                ExecutorName = $"РРІР°РЅРѕРІ РСЃРїРѕР»РЅРёС‚РµР»СЊ{i} РРІР°РЅРѕРІРёС‡",
                 Device = "Xiaomi Redmi Note 6",
-                Type = "Телефон",
-                FaultDescription = "Треснут экран",
-                Status = "Выполнено"
+                Type = "РўРµР»РµС„РѕРЅ",
+                FaultDescription = "РўСЂРµСЃРЅСѓС‚ СЌРєСЂР°РЅ",
+                Status = "Р’С‹РїРѕР»РЅРµРЅРѕ"
             });
         }
     }
