@@ -16,9 +16,9 @@ public static class Database
         $"FROM sys.databases " +
         $"WHERE name = '{_databaseName}') " +
         $"BEGIN " +
-        $"CREATE DATABASE TechnoService; " +
-        $"END " +
-        $"USE '{_databaseName}';";
+        $"CREATE DATABASE {_databaseName}; " +
+        $"END ";
+    private const string _useDatabaseString = $"USE {_databaseName};";
 
     private static readonly SqlConnection _connection = new(_connectionString);
 
@@ -29,6 +29,8 @@ public static class Database
         {
             SqlCommand createDatabaseCommand = new(_createDatabaseString, _connection);
             createDatabaseCommand.ExecuteNonQuery();
+            using SqlCommand useDatabaseCommand = new(_useDatabaseString, _connection);
+            useDatabaseCommand.ExecuteNonQuery();
         }
     }
     public static void OpenConnection()
