@@ -12,12 +12,12 @@
     <StackPanel x:Name="AuthStackPanel" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
         <StackPanel.ChildrenTransitions>
             <TransitionCollection>
-                <AddDeleteThemeTransition />
+                <AddDeleteThemeTransition/>
             </TransitionCollection>
         </StackPanel.ChildrenTransitions>
         <TextBlock x:Name="PageName" Text="Вход" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-        <TextBox Header="Логин:" PlaceholderText="Логин" TextChanging="OnTextChanging" MaxLength="50"/>
-        <PasswordBox Header="Пароль:" PlaceholderText="Пароль" PasswordChanging="OnPasswordChanging" MaxLength="50"/>
+        <TextBox x:Name="Login" Header="Логин:" PlaceholderText="Логин" TextChanging="OnLoginChanging" MaxLength="50" BorderBrush="Red"/>
+        <PasswordBox x:Name="Password" Header="Пароль:" PlaceholderText="Пароль" PasswordChanging="OnPasswordChanging" MaxLength="50" BorderBrush="Red"/>
         <Button x:Name="AuthButton"
                 Content="Войти"
                 Click="OnLoginButtonClick"

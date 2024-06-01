@@ -13,10 +13,14 @@ public sealed partial class UserModel : ObservableObject
 
     [ObservableProperty]
     private string _login;
-
     [ObservableProperty]
     private string _password;
-
     [ObservableProperty]
     private UserTypes _type = UserTypes.Client;
+    [ObservableProperty]
+    private string _surname;
+    [ObservableProperty]
+    private string _name;
+    [ObservableProperty]
+    private string _patronymic;
 }
