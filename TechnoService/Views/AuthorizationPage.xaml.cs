@@ -31,28 +31,11 @@ public sealed partial class AuthorizationPage : Page
     [GeneratedRegex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]
     private static partial Regex PasswordRegex();
 
-    private void TextCorrector(TextBox textBox, Regex regex)
+    private static void TextCorrector(TextBox textBox, Regex regex)
     {
         var currentPosition = textBox.SelectionStart;
         textBox.Text = regex.Replace(textBox.Text, "");
         textBox.Select(currentPosition, 0);
-        if (textBox.Name == "PatronymicBox" || textBox.Text.Length > 0)
-            textBox.BorderBrush = _textBoxDefaultBorderBrush;
-        else
-            textBox.BorderBrush = _textBoxUncorrectBorderBrush;
-    }
-    private void PasswordCorrector(PasswordBox passwordBox)
-    {
-        passwordBox.Password = PasswordCharsRegex().Replace(passwordBox.Password, "");
-        if (!PasswordRegex().IsMatch(passwordBox.Password)) passwordBox.BorderBrush = _textBoxUncorrectBorderBrush;
-        else passwordBox.BorderBrush = _textBoxDefaultBorderBrush;
-        if (_isRegisterPage)
-        {
-            PasswordBox repeatPasswordBox = (PasswordBox)AuthStackPanel.Children[6];
-            if (!(PasswordBox.Password == repeatPasswordBox.Password))
-                repeatPasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
-            else repeatPasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
-        }
     }
     private void ToLogin()
     {
@@ -70,12 +53,40 @@ public sealed partial class AuthorizationPage : Page
         AuthButton.Click += OnLoginButtonClick;
     }
 
-    private void OnNameChanging(TextBox sender, TextBoxTextChangingEventArgs args) =>
+    private void OnNameChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+    {
         TextCorrector(sender, NameCharsRegex());
-    private void OnLoginChanging(TextBox sender, TextBoxTextChangingEventArgs args) =>
+        if (sender.Name == "PatronymicBox" || sender.Text.Length > 0)
+            sender.BorderBrush = _textBoxDefaultBorderBrush;
+        else
+            sender.BorderBrush = _textBoxUncorrectBorderBrush;
+    }
+    private async void OnLoginChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+    {
         TextCorrector(sender, LoginCharsRegex());
-    private void OnPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args) =>
-        PasswordCorrector(sender);
+        bool fieldUncorrect = false;
+        if (sender.Text.Length == 0)
+            fieldUncorrect = true;
+        _authorizationViewModel.CurrentUser.Login = sender.Text;
+        await _authorizationViewModel.IsLoginFreeCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage)) fieldUncorrect = true;
+        if (fieldUncorrect)
+            sender.BorderBrush = _textBoxUncorrectBorderBrush;
+        else
+            sender.BorderBrush = _textBoxDefaultBorderBrush;
+    }
+    private void OnPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args)
+    {
+        PasswordBox.Password = PasswordCharsRegex().Replace(PasswordBox.Password, "");
+        if (!PasswordRegex().IsMatch(PasswordBox.Password)) PasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
+        else PasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
+        if (_isRegisterPage)
+        {
+            if (!(PasswordBox.Password == RepeatPasswordBox.Password))
+                RepeatPasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
+            else RepeatPasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
+        }
+    }
 
     private void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
