@@ -1,5 +1,4 @@
 using Microsoft.UI.Xaml.Navigation;
-using Windows.ApplicationModel.Core;
 
 namespace TechnoService;
 

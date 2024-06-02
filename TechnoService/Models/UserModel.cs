@@ -1,20 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using TechnoService.Services;
 
 namespace TechnoService.Models;
 
 public sealed partial class UserModel : ObservableObject
 {
-    public enum UserTypes
-    {
-        Client = 0,
-        Executor = 1,
-        Admin = 2
-    }
-
-    [ObservableProperty]
-    private string _login;
-    [ObservableProperty]
-    private string _password;
     [ObservableProperty]
     private UserTypes _type = UserTypes.Client;
     [ObservableProperty]
@@ -23,4 +13,8 @@ public sealed partial class UserModel : ObservableObject
     private string _name;
     [ObservableProperty]
     private string _patronymic;
+    [ObservableProperty]
+    private string _login;
+    [ObservableProperty]
+    private Password _password = new();
 }

@@ -15,9 +15,54 @@
                 <AddDeleteThemeTransition/>
             </TransitionCollection>
         </StackPanel.ChildrenTransitions>
-        <TextBlock x:Name="PageName" Text="Вход" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-        <TextBox x:Name="Login" Header="Логин:" PlaceholderText="Логин" TextChanging="OnLoginChanging" MaxLength="50" BorderBrush="Red"/>
-        <PasswordBox x:Name="Password" Header="Пароль:" PlaceholderText="Пароль" PasswordChanging="OnPasswordChanging" MaxLength="50" BorderBrush="Red"/>
+        <TextBlock x:Name="PageName" 
+                   Text="Вход" 
+                   HorizontalAlignment="Center" 
+                   Style="{ThemeResource TitleTextBlockStyle}"/>
+        <TextBox x:Name="SurnameBox" 
+                 Text="{x:Bind _authorizationViewModel.CurrentUser.Surname, Mode=TwoWay}" 
+                 Header="Фамилия:" 
+                 PlaceholderText="Фамилия" 
+                 TextChanging="OnNameChanging" 
+                 MaxLength="50" 
+                 BorderBrush="Red" 
+                 Visibility="Collapsed"/>
+        <TextBox x:Name="NameBox" 
+                 Text="{x:Bind _authorizationViewModel.CurrentUser.Name, Mode=TwoWay}" 
+                 Header="Имя:" 
+                 PlaceholderText="Имя" 
+                 TextChanging="OnNameChanging" 
+                 MaxLength="50" 
+                 BorderBrush="Red" 
+                 Visibility="Collapsed"/>
+        <TextBox x:Name="PatronymicBox" 
+                 Text="{x:Bind _authorizationViewModel.CurrentUser.Patronymic, Mode=TwoWay}" 
+                 Header="Отчество:" 
+                 PlaceholderText="Отчество" 
+                 TextChanging="OnNameChanging" 
+                 MaxLength="50" 
+                 Visibility="Collapsed"/>
+        <TextBox x:Name="LoginBox" 
+                 Text="{x:Bind _authorizationViewModel.CurrentUser.Login, Mode=TwoWay}" 
+                 Header="Логин:" 
+                 PlaceholderText="Логин" 
+                 TextChanging="OnLoginChanging" 
+                 MaxLength="50" 
+                 BorderBrush="Red"/>
+        <PasswordBox x:Name="PasswordBox" 
+                     Password="{x:Bind _authorizationViewModel.CurrentUser.Password.PasswordString, Mode=TwoWay}" 
+                     Header="Пароль:" 
+                     PlaceholderText="Пароль" 
+                     PasswordChanging="OnPasswordChanging" 
+                     MaxLength="50" 
+                     BorderBrush="Red"/>
+        <PasswordBox x:Name="RepeatPasswordBox" 
+                     Header="Повторите пароль:" 
+                     PlaceholderText="Пароль" 
+                     PasswordChanging="OnPasswordChanging" 
+                     MaxLength="50" 
+                     BorderBrush="Red" 
+                     Visibility="Collapsed"/>
         <Button x:Name="AuthButton"
                 Content="Войти"
                 Click="OnLoginButtonClick"

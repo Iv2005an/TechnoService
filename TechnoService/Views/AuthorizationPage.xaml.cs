@@ -36,7 +36,7 @@ public sealed partial class AuthorizationPage : Page
         var currentPosition = textBox.SelectionStart;
         textBox.Text = regex.Replace(textBox.Text, "");
         textBox.Select(currentPosition, 0);
-        if (textBox.Text.Length > 0)
+        if (textBox.Name == "PatronymicBox" || textBox.Text.Length > 0)
             textBox.BorderBrush = _textBoxDefaultBorderBrush;
         else
             textBox.BorderBrush = _textBoxUncorrectBorderBrush;
@@ -49,17 +49,10 @@ public sealed partial class AuthorizationPage : Page
         if (isRegisterPage)
         {
             PasswordBox repeatPasswordBox = (PasswordBox)AuthStackPanel.Children[6];
-            if (!(Password.Password == repeatPasswordBox.Password))
+            if (!(PasswordBox.Password == repeatPasswordBox.Password))
                 repeatPasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
             else repeatPasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
         }
-    }
-    private TextBox GetNameBox(string header, string placeholder, bool required = true)
-    {
-        TextBox textBox = new() { Header = header, PlaceholderText = placeholder, MaxLength = 50 };
-        if (required) textBox.BorderBrush = _textBoxUncorrectBorderBrush;
-        textBox.TextChanging += OnNameChanging;
-        return textBox;
     }
     private void ToLogin()
     {
@@ -68,8 +61,10 @@ public sealed partial class AuthorizationPage : Page
         ChangeAuthButton.Click += OnRegisterPageButtonClick;
         ChangeAuthButton.Content = "Зарегистрироваться";
         PageName.Text = "Вход";
-        for (int i = 0; i < 3; i++) AuthStackPanel.Children.RemoveAt(1);
-        AuthStackPanel.Children.RemoveAt(3);
+        SurnameBox.Visibility = Visibility.Collapsed;
+        NameBox.Visibility = Visibility.Collapsed;
+        PatronymicBox.Visibility = Visibility.Collapsed;
+        RepeatPasswordBox.Visibility = Visibility.Collapsed;
         AuthButton.Content = "Войти";
         AuthButton.Click -= OnRegisterButtonClick;
         AuthButton.Click += OnLoginButtonClick;
@@ -81,36 +76,31 @@ public sealed partial class AuthorizationPage : Page
         TextCorrector(sender, LoginCharsRegex());
     private void OnPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args) =>
         PasswordCorrector(sender);
-    private void OnRepeatPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args)
-    {
-        PasswordCorrector(sender);
-    }
 
     private void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
-        Frame.Navigate(typeof(MainPage));
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
     {
         string errorMessage = "";
-        TextBox surnameBox = (TextBox)AuthStackPanel.Children[1];
-        TextBox nameBox = (TextBox)AuthStackPanel.Children[2];
-        TextBox patronymicBox = (TextBox)AuthStackPanel.Children[3];
-        PasswordBox repeatPasswordBox = (PasswordBox)AuthStackPanel.Children[6];
-
-        if (string.IsNullOrEmpty(surnameBox.Text))
+        if (string.IsNullOrEmpty(SurnameBox.Text))
             errorMessage += "Введите фамилию\n";
-        if (string.IsNullOrEmpty(nameBox.Text))
+        if (string.IsNullOrEmpty(NameBox.Text))
             errorMessage += "Введите имя\n";
-        if (string.IsNullOrEmpty(Login.Text))
+        if (string.IsNullOrEmpty(LoginBox.Text))
             errorMessage += "Введите логин\n";
-        if (!PasswordRegex().IsMatch(Password.Password))
+        else
+        {
+            await _authorizationViewModel.IsLoginFreeCommand.ExecuteAsync(LoginBox.Text);
+            errorMessage += _authorizationViewModel.CommandMessage ?? "";
+        }
+        if (!PasswordRegex().IsMatch(PasswordBox.Password))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
                 "  -цифры\n" +
                 "  -специальные символы(#?!@$%^&*-)\n";
-        if (Password.Password != repeatPasswordBox.Password)
+        if (PasswordBox.Password != RepeatPasswordBox.Password)
             errorMessage += "Пароли не совпадают\n";
         errorMessage = errorMessage.Trim();
         if (errorMessage.Length > 0)
@@ -125,25 +115,19 @@ public sealed partial class AuthorizationPage : Page
             return;
         }
 
-        _authorizationViewModel.RegisterCommand.Execute(new Models.UserModel()
-        {
-            Login = Login.Text,
-            Password = Password.Password,
-            Surname = surnameBox.Text,
-            Name = nameBox.Text,
-            Patronymic = patronymicBox.Text,
-        });
-        if (_authorizationViewModel.Error)
+        _authorizationViewModel.RegisterCommand.Execute(null);
+        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Title = "Ошибка",
-                Content = "Ошибка регистрации",
+                Content = _authorizationViewModel.CommandMessage,
                 CloseButtonText = "Ок",
             }.ShowAsync();
             return;
         }
+        RepeatPasswordBox.Password = "";
 
         ToLogin();
     }
@@ -154,12 +138,10 @@ public sealed partial class AuthorizationPage : Page
         ChangeAuthButton.Click += OnLoginPageButtonClick;
         ChangeAuthButton.Content = "Войти";
         PageName.Text = "Регистрация";
-        AuthStackPanel.Children.Insert(1, GetNameBox("Фамилия:", "Фамилия"));
-        AuthStackPanel.Children.Insert(2, GetNameBox("Имя:", "Имя"));
-        AuthStackPanel.Children.Insert(3, GetNameBox("Отчество:", "Отчество", false));
-        PasswordBox passwordBox = new() { Header = "Повторите пароль:", PlaceholderText = "Пароль", MaxLength = 50, BorderBrush = _textBoxUncorrectBorderBrush };
-        passwordBox.PasswordChanging += OnRepeatPasswordChanging;
-        AuthStackPanel.Children.Insert(6, passwordBox);
+        SurnameBox.Visibility = Visibility.Visible;
+        NameBox.Visibility = Visibility.Visible;
+        PatronymicBox.Visibility = Visibility.Visible;
+        RepeatPasswordBox.Visibility = Visibility.Visible;
         AuthButton.Content = "Зарегистрироваться";
         AuthButton.Click -= OnLoginButtonClick;
         AuthButton.Click += OnRegisterButtonClick;
