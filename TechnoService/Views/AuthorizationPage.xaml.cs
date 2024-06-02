@@ -20,7 +20,7 @@ public sealed partial class AuthorizationPage : Page
     private readonly AuthorizationViewModel _authorizationViewModel;
     private readonly LinearGradientBrush _textBoxDefaultBorderBrush;
     private static readonly SolidColorBrush _textBoxUncorrectBorderBrush = new() { Color = Colors.Red };
-    private bool isRegisterPage = false;
+    private bool _isRegisterPage = false;
 
     [GeneratedRegex(@"[^а-яА-Яa-zA-Z]")]
     private static partial Regex NameCharsRegex();
@@ -46,7 +46,7 @@ public sealed partial class AuthorizationPage : Page
         passwordBox.Password = PasswordCharsRegex().Replace(passwordBox.Password, "");
         if (!PasswordRegex().IsMatch(passwordBox.Password)) passwordBox.BorderBrush = _textBoxUncorrectBorderBrush;
         else passwordBox.BorderBrush = _textBoxDefaultBorderBrush;
-        if (isRegisterPage)
+        if (_isRegisterPage)
         {
             PasswordBox repeatPasswordBox = (PasswordBox)AuthStackPanel.Children[6];
             if (!(PasswordBox.Password == repeatPasswordBox.Password))
@@ -56,7 +56,7 @@ public sealed partial class AuthorizationPage : Page
     }
     private void ToLogin()
     {
-        isRegisterPage = false;
+        _isRegisterPage = false;
         ChangeAuthButton.Click -= OnLoginPageButtonClick;
         ChangeAuthButton.Click += OnRegisterPageButtonClick;
         ChangeAuthButton.Content = "Зарегистрироваться";
@@ -133,7 +133,7 @@ public sealed partial class AuthorizationPage : Page
     }
     private void OnRegisterPageButtonClick(object sender, RoutedEventArgs e)
     {
-        isRegisterPage = true;
+        _isRegisterPage = true;
         ChangeAuthButton.Click -= OnRegisterPageButtonClick;
         ChangeAuthButton.Click += OnLoginPageButtonClick;
         ChangeAuthButton.Content = "Войти";
