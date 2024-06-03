@@ -6,6 +6,8 @@ namespace TechnoService.Models;
 public sealed partial class UserModel : ObservableObject
 {
     [ObservableProperty]
+    private int _id;
+    [ObservableProperty]
     private UserTypes _type = UserTypes.Client;
     [ObservableProperty]
     private string _surname;

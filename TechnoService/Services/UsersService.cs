@@ -98,6 +98,7 @@ public static class UsersService
         {
             if (user.Password.Hash == userReader.GetString(6))
             {
+                user.Id = userReader.GetInt32(0);
                 user.Type = (UserTypes)Enum.GetValues(typeof(UserTypes)).GetValue(userReader.GetByte(1));
                 user.Surname = userReader.GetString(2);
                 user.Name = userReader.GetString(3);
