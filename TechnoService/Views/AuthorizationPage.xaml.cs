@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Text.RegularExpressions;
+using TechnoService.Models;
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;
@@ -12,7 +13,7 @@ public sealed partial class AuthorizationPage : Page
 {
     public AuthorizationPage() => InitializeComponent();
 
-    private readonly AuthorizationPageViewModel _authorizationPageViewModel = new();
+    private readonly AuthorizationPageViewModel _viewModel = new();
     private readonly LinearGradientBrush _textBoxDefaultBorderBrush = (LinearGradientBrush)new TextBox().BorderBrush;
     private static readonly SolidColorBrush _textBoxUncorrectBorderBrush = new() { Color = Colors.Red };
     private bool _isRegisterPage = false;
@@ -62,9 +63,9 @@ public sealed partial class AuthorizationPage : Page
         bool fieldUncorrect = false;
         if (sender.Text.Length == 0)
             fieldUncorrect = true;
-        _authorizationPageViewModel.CurrentUser.Login = sender.Text;
-        await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
-        if (string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+        _viewModel.CurrentUser.Login = sender.Text;
+        await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
+        if (string.IsNullOrEmpty(_viewModel.CommandMessage))
         {
             if (!_isRegisterPage) fieldUncorrect = true;
         }
@@ -113,8 +114,8 @@ public sealed partial class AuthorizationPage : Page
             errorMessage += "Введите логин\n";
         else
         {
-            await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
-            if (string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+            await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
+            if (string.IsNullOrEmpty(_viewModel.CommandMessage))
                 errorMessage += "Логин не существует\n";
         }
         if (!PasswordRegex().IsMatch(PasswordBox.Password))
@@ -136,20 +137,20 @@ public sealed partial class AuthorizationPage : Page
             return;
         }
 
-        await _authorizationPageViewModel.LoginCommand.ExecuteAsync(null);
-        if (!string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+        await _viewModel.LoginCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_viewModel.CommandMessage))
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Title = "Ошибка",
-                Content = _authorizationPageViewModel.CommandMessage,
+                Content = _viewModel.CommandMessage,
                 CloseButtonText = "Ок",
             }.ShowAsync();
             return;
         }
 
-        Frame.Navigate(typeof(MainPage), _authorizationPageViewModel.CurrentUser);
+        Frame.Navigate(typeof(MainPage), _viewModel.CurrentUser);
 #endif
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
@@ -163,8 +164,8 @@ public sealed partial class AuthorizationPage : Page
             errorMessage += "Введите логин\n";
         else
         {
-            await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
-            errorMessage += _authorizationPageViewModel.CommandMessage ?? "";
+            await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
+            errorMessage += _viewModel.CommandMessage ?? "";
         }
         if (!PasswordRegex().IsMatch(PasswordBox.Password))
             errorMessage += "Пароль не соответствует требованиям:\n" +
@@ -187,14 +188,14 @@ public sealed partial class AuthorizationPage : Page
             return;
         }
 
-        await _authorizationPageViewModel.RegisterCommand.ExecuteAsync(null);
-        if (!string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+        await _viewModel.RegisterCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_viewModel.CommandMessage))
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Title = "Ошибка",
-                Content = _authorizationPageViewModel.CommandMessage,
+                Content = _viewModel.CommandMessage,
                 CloseButtonText = "Ок",
             }.ShowAsync();
             return;

@@ -7,16 +7,12 @@ namespace TechnoService.Views;
 
 public sealed partial class MainPage : Page
 {
-    public MainPage()
-    {
-        InitializeComponent();
-        NavigationView.SelectedItem = RequestsMenuItem;
-    }
-    private readonly MainPageViewModel _mainPageViewModel = new();
+    public MainPage() => InitializeComponent();
+    private readonly MainPageViewModel _viewModel = new();
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         UserModel currentUser = (UserModel)e.Parameter;
-        _mainPageViewModel.CurrentUser = currentUser;
+        _viewModel.CurrentUser = currentUser;
         switch (currentUser.Type)
         {
             case UserTypes.Client:
@@ -27,27 +23,27 @@ public sealed partial class MainPage : Page
                 StatisticsMenuItem.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 break;
         }
+        NavigationView.SelectedItem = RequestsMenuItem;
         base.OnNavigatedTo(e);
     }
-
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         switch (((NavigationViewItem)sender.SelectedItem).Tag)
         {
             case "Requests":
-                ContentFrame.Navigate(typeof(RequestsPage));
+                ContentFrame.Navigate(typeof(RequestsPage), _viewModel.CurrentUser);
                 break;
             case "Staff":
                 ContentFrame.Navigate(typeof(StaffPage));
                 break;
             case "Statistics":
-                ContentFrame.Navigate(typeof(StatisticsPage));
+                ContentFrame.Navigate(typeof(StatisticsPage), _viewModel.CurrentUser);
                 break;
             case "Settings":
                 ContentFrame.Navigate(typeof(SettingsPage));
                 break;
             default:
-                ContentFrame.Navigate(typeof(RequestsPage));
+                ContentFrame.Navigate(typeof(RequestsPage), _viewModel.CurrentUser);
                 break;
         }
     }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using TechnoService.Models;
+using TechnoService.ViewModels;
 
 namespace TechnoService.Views;
 
@@ -23,6 +26,22 @@ public sealed partial class RequestsPage : Page
                 Status = "Выполнено"
             });
         }
+    }
+    private readonly RequestsPageViewModel _viewModel = new();
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        UserModel currentUser = (UserModel)e.Parameter;
+        _viewModel.CurrentUser = currentUser;
+        switch (currentUser.Type)
+        {
+            case UserTypes.Client:
+                break;
+            case UserTypes.Executor:
+                break;
+            case UserTypes.Admin:
+                break;
+        }
+        base.OnNavigatedTo(e);
     }
 
     public record Request

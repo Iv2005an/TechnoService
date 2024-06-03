@@ -1,18 +1,27 @@
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using TechnoService.Models;
+using TechnoService.ViewModels;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace TechnoService.Views;
 
-namespace TechnoService.Views
+public sealed partial class StatisticsPage : Page
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class StatisticsPage : Page
+    public StatisticsPage() => InitializeComponent();
+    private readonly StatisticsPageViewModel _viewModel = new();
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        public StatisticsPage()
+        UserModel currentUser = (UserModel)e.Parameter;
+        _viewModel.CurrentUser = currentUser;
+        switch (currentUser.Type)
         {
-            this.InitializeComponent();
+            case UserTypes.Client:
+                break;
+            case UserTypes.Executor:
+                break;
+            case UserTypes.Admin:
+                break;
         }
+        base.OnNavigatedTo(e);
     }
 }
