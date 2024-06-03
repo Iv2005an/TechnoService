@@ -27,7 +27,7 @@ public static class UsersService
     {
         await Init();
         using SqlConnection connection = Database.Connection;
-        using SqlCommand loginCountCommand = new($"SELECT COUNT(1) FROM users WHERE login='{login}';", connection);
+        using SqlCommand loginCountCommand = new($"SELECT COUNT(1) FROM users WHERE login=N'{login}';", connection);
         using SqlDataReader reader = await loginCountCommand.ExecuteReaderAsync();
         if (await reader.ReadAsync()) return reader.GetInt32(0) == 0;
         return true;
@@ -58,7 +58,7 @@ public static class UsersService
         using SqlCommand getSaltCommand = new(
             $"SELECT salt " +
             $"FROM users " +
-            $"WHERE login='{user.Login}'", connection);
+            $"WHERE login=N'{user.Login}'", connection);
         using (SqlDataReader saltReader = await getSaltCommand.ExecuteReaderAsync())
         {
             if (await saltReader.ReadAsync())
@@ -68,8 +68,8 @@ public static class UsersService
         using SqlCommand getUserCommand = new(
             $"SELECT * " +
             $"FROM users " +
-            $"WHERE login='{user.Login}' AND " +
-            $"password='{user.Password.Hash}'",
+            $"WHERE login=N'{user.Login}' AND " +
+            $"password=N'{user.Password.Hash}'",
             connection);
         using SqlDataReader userReader = await getUserCommand.ExecuteReaderAsync();
         if (await userReader.ReadAsync())
