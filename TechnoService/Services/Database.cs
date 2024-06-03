@@ -12,7 +12,7 @@ public static class Database
         $"WHERE name = '{_databaseName}') " +
         $"BEGIN " +
         $"CREATE DATABASE {_databaseName}; " +
-        $"END ";
+        $"END";
     private static string GetConnectionString(string databaseName = "master") =>
         $"Server=localhost\\SQLEXPRESS;" +
         $"Database={databaseName};" +

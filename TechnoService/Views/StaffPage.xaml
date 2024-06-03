@@ -12,7 +12,6 @@
 
     <StackPanel>
         <CommandBar>
-            <AppBarButton Icon="Add" Label="Добавить"/>
             <CommandBar.Content>
                 <TextBlock Text="Персонал" Margin="12,14"/>
             </CommandBar.Content>

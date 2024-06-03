@@ -7,25 +7,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:models="using:TechnoService.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel>
-        <CommandBar>
+        <CommandBar DefaultLabelPosition="Right">
             <AppBarButton Icon="Add" Label="Добавить заявку"/>
             <CommandBar.Content>
                 <TextBlock Text="Заявки" Margin="12,14"/>
             </CommandBar.Content>
         </CommandBar>
-        <controls:DataGrid ItemsSource="{x:Bind Requests}" AutoGenerateColumns="False">
+        <controls:DataGrid ItemsSource="{x:Bind _viewModel.Requests}" AutoGenerateColumns="False" IsReadOnly="True">
+            <controls:DataGrid.DataContext>
+                <models:RequestModel/>
+            </controls:DataGrid.DataContext>
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <controls:DataGridTextColumn Header="Дата добавления" Binding="{Binding StartDate}"/>
-                <controls:DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}"/>
-                <controls:DataGridTextColumn Header="Исполнитель" Binding="{Binding ExecutorName}"/>
+                <controls:DataGridTextColumn Header="Клиент" Binding="{Binding Client.Name}"/>
+                <controls:DataGridTextColumn Header="Исполнитель" Binding="{Binding Executor.Name}"/>
                 <controls:DataGridTextColumn Header="Устройство" Binding="{Binding Device}"/>
                 <controls:DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
-                <controls:DataGridTextColumn Header="Описание" Binding="{Binding FaultDescription}"/>
+                <controls:DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
                 <controls:DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
