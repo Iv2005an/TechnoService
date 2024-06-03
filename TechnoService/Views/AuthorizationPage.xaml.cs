@@ -10,15 +10,10 @@ namespace TechnoService.Views;
 
 public sealed partial class AuthorizationPage : Page
 {
-    public AuthorizationPage()
-    {
-        InitializeComponent();
-        _authorizationViewModel = new AuthorizationViewModel();
-        _textBoxDefaultBorderBrush = (LinearGradientBrush)new TextBox().BorderBrush;
-    }
+    public AuthorizationPage() => InitializeComponent();
 
-    private readonly AuthorizationViewModel _authorizationViewModel;
-    private readonly LinearGradientBrush _textBoxDefaultBorderBrush;
+    private readonly AuthorizationPageViewModel _authorizationPageViewModel = new();
+    private readonly LinearGradientBrush _textBoxDefaultBorderBrush = (LinearGradientBrush)new TextBox().BorderBrush;
     private static readonly SolidColorBrush _textBoxUncorrectBorderBrush = new() { Color = Colors.Red };
     private bool _isRegisterPage = false;
 
@@ -67,9 +62,9 @@ public sealed partial class AuthorizationPage : Page
         bool fieldUncorrect = false;
         if (sender.Text.Length == 0)
             fieldUncorrect = true;
-        _authorizationViewModel.CurrentUser.Login = sender.Text;
-        await _authorizationViewModel.IsLoginFreeCommand.ExecuteAsync(null);
-        if (string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
+        _authorizationPageViewModel.CurrentUser.Login = sender.Text;
+        await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
+        if (string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
         {
             if (!_isRegisterPage) fieldUncorrect = true;
         }
@@ -97,19 +92,48 @@ public sealed partial class AuthorizationPage : Page
 
     private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
-        await _authorizationViewModel.LoginCommand.ExecuteAsync(null);
-        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
+        string errorMessage = "";
+        if (string.IsNullOrEmpty(LoginBox.Text))
+            errorMessage += "Введите логин\n";
+        else
+        {
+            await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
+            if (string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+                errorMessage += "Логин не существует\n";
+        }
+        if (!PasswordRegex().IsMatch(PasswordBox.Password))
+            errorMessage += "Пароль не соответствует требованиям:\n" +
+                "  -минимум 8 символов\n" +
+                "  -cимволы верхнего и нижнего регистра\n" +
+                "  -цифры\n" +
+                "  -специальные символы(#?!@$%^&*-)\n";
+        errorMessage = errorMessage.Trim();
+        if (errorMessage.Length > 0)
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Title = "Ошибка",
-                Content = _authorizationViewModel.CommandMessage,
+                Content = errorMessage,
                 CloseButtonText = "Ок",
             }.ShowAsync();
             return;
         }
-        Frame.Navigate(typeof(MainPage), _authorizationViewModel.CurrentUser);
+
+        await _authorizationPageViewModel.LoginCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
+        {
+            await new ContentDialog()
+            {
+                XamlRoot = XamlRoot,
+                Title = "Ошибка",
+                Content = _authorizationPageViewModel.CommandMessage,
+                CloseButtonText = "Ок",
+            }.ShowAsync();
+            return;
+        }
+
+        Frame.Navigate(typeof(MainPage), _authorizationPageViewModel.CurrentUser);
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
     {
@@ -122,8 +146,8 @@ public sealed partial class AuthorizationPage : Page
             errorMessage += "Введите логин\n";
         else
         {
-            await _authorizationViewModel.IsLoginFreeCommand.ExecuteAsync(LoginBox.Text);
-            errorMessage += _authorizationViewModel.CommandMessage ?? "";
+            await _authorizationPageViewModel.IsLoginFreeCommand.ExecuteAsync(null);
+            errorMessage += _authorizationPageViewModel.CommandMessage ?? "";
         }
         if (!PasswordRegex().IsMatch(PasswordBox.Password))
             errorMessage += "Пароль не соответствует требованиям:\n" +
@@ -146,14 +170,14 @@ public sealed partial class AuthorizationPage : Page
             return;
         }
 
-        await _authorizationViewModel.RegisterCommand.ExecuteAsync(null);
-        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
+        await _authorizationPageViewModel.RegisterCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_authorizationPageViewModel.CommandMessage))
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
                 Title = "Ошибка",
-                Content = _authorizationViewModel.CommandMessage,
+                Content = _authorizationPageViewModel.CommandMessage,
                 CloseButtonText = "Ок",
             }.ShowAsync();
             return;

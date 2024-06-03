@@ -6,7 +6,7 @@ using TechnoService.Services;
 
 namespace TechnoService.ViewModels;
 
-public partial class AuthorizationViewModel : ObservableObject
+public partial class AuthorizationPageViewModel : ObservableObject
 {
     [ObservableProperty]
     private UserModel _currentUser = new();
