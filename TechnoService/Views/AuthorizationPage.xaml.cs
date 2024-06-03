@@ -90,6 +90,22 @@ public sealed partial class AuthorizationPage : Page
         }
     }
 
+
+#if DEBUG
+    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(MainPage), new UserModel()
+        {
+            Id = 0,
+            Type = UserTypes.Admin,
+            Login = "admin",
+            Password = new()
+            {
+                PasswordString = "Admin_1234"
+            }
+        });
+        return;
+#else
     private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
         string errorMessage = "";
@@ -134,6 +150,7 @@ public sealed partial class AuthorizationPage : Page
         }
 
         Frame.Navigate(typeof(MainPage), _authorizationPageViewModel.CurrentUser);
+#endif
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
     {
