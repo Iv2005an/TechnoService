@@ -69,7 +69,14 @@ public sealed partial class AuthorizationPage : Page
             fieldUncorrect = true;
         _authorizationViewModel.CurrentUser.Login = sender.Text;
         await _authorizationViewModel.IsLoginFreeCommand.ExecuteAsync(null);
-        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage)) fieldUncorrect = true;
+        if (string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
+        {
+            if (!_isRegisterPage) fieldUncorrect = true;
+        }
+        else
+        {
+            if (_isRegisterPage) fieldUncorrect = true;
+        }
         if (fieldUncorrect)
             sender.BorderBrush = _textBoxUncorrectBorderBrush;
         else
