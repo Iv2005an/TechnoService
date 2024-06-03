@@ -21,9 +21,9 @@ public sealed partial class AuthorizationPage : Page
     private static partial Regex NameCharsRegex();
     [GeneratedRegex(@"[^a-zA-Z0-9]")]
     private static partial Regex LoginCharsRegex();
-    [GeneratedRegex(@"[^a-zA-Z0-9#?!@$%^&*-]")]
+    [GeneratedRegex(@"[^a-zA-Z0-9#?!@$%^&*_-]")]
     private static partial Regex PasswordCharsRegex();
-    [GeneratedRegex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]
+    [GeneratedRegex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,}$")]
     private static partial Regex PasswordRegex();
 
     private static void TextCorrector(TextBox textBox, Regex regex)
