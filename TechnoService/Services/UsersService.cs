@@ -53,20 +53,33 @@ public static class UsersService
     public static async Task<UserModel> Login(UserModel user)
     {
         await Init();
-        if (!await IsLoginFree(user.Login)) return null;
+        if (await IsLoginFree(user.Login)) return null;
         using SqlConnection connection = Database.Connection;
-        using SqlCommand getUserCommand = new("", connection);
-        using SqlDataReader reader = await getUserCommand.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
+        using SqlCommand getSaltCommand = new(
+            $"SELECT salt " +
+            $"FROM users " +
+            $"WHERE login='{user.Login}'", connection);
+        using (SqlDataReader saltReader = await getSaltCommand.ExecuteReaderAsync())
         {
-            user.Password.ComputeHash(reader.GetString(7));
-            if (user.Password.Hash == reader.GetString(6))
+            if (await saltReader.ReadAsync())
+                user.Password.ComputeHash(saltReader.GetString(0));
+            else return null;
+        }
+        using SqlCommand getUserCommand = new(
+            $"SELECT * " +
+            $"FROM users " +
+            $"WHERE login='{user.Login}' AND " +
+            $"password='{user.Password.Hash}'",
+            connection);
+        using SqlDataReader userReader = await getUserCommand.ExecuteReaderAsync();
+        if (await userReader.ReadAsync())
+        {
+            if (user.Password.Hash == userReader.GetString(6))
             {
-                user.Type = (UserTypes)Enum.GetValues(typeof(UserTypes)).GetValue(reader.GetInt32(1));
-                user.Surname = reader.GetString(2);
-                user.Name = reader.GetString(3);
-                user.Patronymic = reader.GetString(4);
-                user.Password.PasswordString = null;
+                user.Type = (UserTypes)Enum.GetValues(typeof(UserTypes)).GetValue(userReader.GetByte(1));
+                user.Surname = userReader.GetString(2);
+                user.Name = userReader.GetString(3);
+                user.Patronymic = userReader.GetString(4);
                 return user;
             };
         }

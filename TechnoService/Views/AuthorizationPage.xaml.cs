@@ -95,8 +95,21 @@ public sealed partial class AuthorizationPage : Page
         }
     }
 
-    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
+    private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
+        await _authorizationViewModel.LoginCommand.ExecuteAsync(null);
+        if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
+        {
+            await new ContentDialog()
+            {
+                XamlRoot = XamlRoot,
+                Title = "Œ¯Ë·Í‡",
+                Content = _authorizationViewModel.CommandMessage,
+                CloseButtonText = "ŒÍ",
+            }.ShowAsync();
+            return;
+        }
+        Frame.Navigate(typeof(MainPage), _authorizationViewModel.CurrentUser);
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
     {
@@ -133,7 +146,7 @@ public sealed partial class AuthorizationPage : Page
             return;
         }
 
-        _authorizationViewModel.RegisterCommand.Execute(null);
+        await _authorizationViewModel.RegisterCommand.ExecuteAsync(null);
         if (!string.IsNullOrEmpty(_authorizationViewModel.CommandMessage))
         {
             await new ContentDialog()

@@ -19,7 +19,7 @@ public partial class Password : ObservableObject
     {
         const string constantSalt = "6DAC6031965A80BC68B80B8C7702038DC330A78E559DF0A598CD9BF34D8FE7A122337007F5E7839CC8AFE5AA25FE4506E29A87530E80E90D6FB8895FA9025753";
 
-        byte[] strBytes = Encoding.UTF8.GetBytes(password);
+        byte[] strBytes = Encoding.UTF8.GetBytes(password ?? "");
         byte[] constantSaltBytes = Encoding.UTF8.GetBytes(constantSalt);
         byte[] saltBytes = Encoding.UTF8.GetBytes(passwordSalt);
         byte[] saltedStrBytes = new byte[strBytes.Length + constantSaltBytes.Length + saltBytes.Length];
