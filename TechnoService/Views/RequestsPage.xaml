@@ -13,7 +13,7 @@
 
     <StackPanel>
         <CommandBar DefaultLabelPosition="Right">
-            <AppBarButton Icon="Add" Label="Добавить заявку"/>
+            <AppBarButton Icon="Add" Label="Добавить заявку" Click="AddRequestClick"/>
             <CommandBar.Content>
                 <TextBlock Text="Заявки" Margin="12,14"/>
             </CommandBar.Content>

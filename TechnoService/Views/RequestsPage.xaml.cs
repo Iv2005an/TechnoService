@@ -1,5 +1,7 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using TechnoService.Models;
 using TechnoService.Services;
 using TechnoService.ViewModels;
@@ -25,5 +27,17 @@ public sealed partial class RequestsPage : Page
                 break;
         }
         base.OnNavigatedTo(e);
+    }
+    private async void AddRequestClick(object sender, RoutedEventArgs e)
+    {
+        await new ContentDialog()
+        {
+            XamlRoot = XamlRoot,
+            Title = "Добавление заявки",
+            PrimaryButtonText = "Добавить заявку",
+            CloseButtonText = "Отмена",
+            DefaultButton = ContentDialogButton.Primary,
+            Content = new AddRequestPage()
+        }.ShowAsync();
     }
 }
