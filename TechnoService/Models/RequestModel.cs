@@ -36,4 +36,12 @@ public partial class RequestModel : ObservableObject
     public string _description;
     [ObservableProperty]
     public StatusTypes _status;
+
+    public int StatusIndex => Convert.ToInt32(Status);
+    public string StatusName =>
+    new string[] {
+            "В ожидании",
+            "В процессе",
+            "Выполнено",
+            "Не выполнено" }[Convert.ToInt32(Status)];
 }

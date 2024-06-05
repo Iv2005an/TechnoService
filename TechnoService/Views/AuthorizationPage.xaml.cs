@@ -4,7 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Text.RegularExpressions;
+#if DEBUG
 using TechnoService.Models;
+#endif
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;

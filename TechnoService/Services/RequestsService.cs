@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TechnoService.Models;
@@ -25,6 +26,21 @@ public class RequestsService
             "FOREIGN KEY (executor_id) REFERENCES users (Id));",
             connection);
         await createUsersTableCommand.ExecuteNonQueryAsync();
+    }
+    public static async Task AddRequest(RequestModel request)
+    {
+        await Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand addRequestCommand = new(
+            "INSERT INTO requests VALUES(" +
+            $"GETDATE()," +
+            $"{request.Client.Id}," +
+            $"{request.Executor.Id}," +
+            $"'{request.Device}'," +
+            $"'{request.Type}'," +
+            $"'{request.Description}'," +
+            $"{request.StatusIndex});", connection);
+        await addRequestCommand.ExecuteNonQueryAsync();
     }
     public static async Task<List<RequestModel>> GetRequests()
     {

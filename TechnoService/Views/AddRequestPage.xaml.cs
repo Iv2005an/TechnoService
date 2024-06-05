@@ -1,31 +1,22 @@
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
+using TechnoService.Models;
+using TechnoService.ViewModels;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace TechnoService.Views;
 
-namespace TechnoService.Views
+public sealed partial class AddRequestPage : Page
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class AddRequestPage : Page
+    public AddRequestPage(UserModel client)
     {
-        public AddRequestPage()
-        {
-            this.InitializeComponent();
-        }
+        InitializeComponent();
+        _viewModel.Request.Client = client;
+    }
+
+    public readonly AddRequestPageViewModel _viewModel = new();
+
+    public async Task AddRequest()
+    {
+        await _viewModel.AddRequestCommand.ExecuteAsync(null);
     }
 }

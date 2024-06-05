@@ -30,14 +30,21 @@ public sealed partial class RequestsPage : Page
     }
     private async void AddRequestClick(object sender, RoutedEventArgs e)
     {
-        await new ContentDialog()
+        AddRequestPage addRequestPage = new(_viewModel.CurrentUser);
+        var result = await new ContentDialog()
         {
             XamlRoot = XamlRoot,
             Title = "Добавление заявки",
             PrimaryButtonText = "Добавить заявку",
             CloseButtonText = "Отмена",
             DefaultButton = ContentDialogButton.Primary,
-            Content = new AddRequestPage()
+            Content = addRequestPage
         }.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            await addRequestPage.AddRequest();
+            _viewModel.Requests = new(await RequestsService.GetRequests());
+        }
     }
 }
