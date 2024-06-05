@@ -1,4 +1,4 @@
-using Microsoft.UI;
+п»їusing Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -18,7 +18,7 @@ public sealed partial class AuthorizationPage : Page
     private static readonly SolidColorBrush _textBoxUncorrectBorderBrush = new() { Color = Colors.Red };
     private bool _isRegisterPage = false;
 
-    [GeneratedRegex(@"[^а-яА-Яa-zA-Z]")]
+    [GeneratedRegex(@"[^Р°-СЏРђ-РЇa-zA-Z]")]
     private static partial Regex NameCharsRegex();
     [GeneratedRegex(@"[^a-zA-Z0-9]")]
     private static partial Regex LoginCharsRegex();
@@ -38,13 +38,13 @@ public sealed partial class AuthorizationPage : Page
         _isRegisterPage = false;
         ChangeAuthButton.Click -= OnLoginPageButtonClick;
         ChangeAuthButton.Click += OnRegisterPageButtonClick;
-        ChangeAuthButton.Content = "Зарегистрироваться";
-        PageName.Text = "Вход";
+        ChangeAuthButton.Content = "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ";
+        PageName.Text = "Р’С…РѕРґ";
         SurnameBox.Visibility = Visibility.Collapsed;
         NameBox.Visibility = Visibility.Collapsed;
         PatronymicBox.Visibility = Visibility.Collapsed;
         RepeatPasswordBox.Visibility = Visibility.Collapsed;
-        AuthButton.Content = "Войти";
+        AuthButton.Content = "Р’РѕР№С‚Рё";
         AuthButton.Click -= OnRegisterButtonClick;
         AuthButton.Click += OnLoginButtonClick;
     }
@@ -111,28 +111,28 @@ public sealed partial class AuthorizationPage : Page
     {
         string errorMessage = "";
         if (string.IsNullOrEmpty(LoginBox.Text))
-            errorMessage += "Введите логин\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ\n";
         else
         {
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             if (string.IsNullOrEmpty(_viewModel.CommandMessage))
-                errorMessage += "Логин не существует\n";
+                errorMessage += "Р›РѕРіРёРЅ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\n";
         }
         if (!PasswordRegex().IsMatch(PasswordBox.Password))
-            errorMessage += "Пароль не соответствует требованиям:\n" +
-                "  -минимум 8 символов\n" +
-                "  -cимволы верхнего и нижнего регистра\n" +
-                "  -цифры\n" +
-                "  -специальные символы(#?!@$%^&*-)\n";
+            errorMessage += "РџР°СЂРѕР»СЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏРј:\n" +
+                "  -РјРёРЅРёРјСѓРј 8 СЃРёРјРІРѕР»РѕРІ\n" +
+                "  -cРёРјРІРѕР»С‹ РІРµСЂС…РЅРµРіРѕ Рё РЅРёР¶РЅРµРіРѕ СЂРµРіРёСЃС‚СЂР°\n" +
+                "  -С†РёС„СЂС‹\n" +
+                "  -СЃРїРµС†РёР°Р»СЊРЅС‹Рµ СЃРёРјРІРѕР»С‹(#?!@$%^&*-)\n";
         errorMessage = errorMessage.Trim();
         if (errorMessage.Length > 0)
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = errorMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
             return;
         }
@@ -143,9 +143,9 @@ public sealed partial class AuthorizationPage : Page
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = _viewModel.CommandMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
             return;
         }
@@ -157,33 +157,33 @@ public sealed partial class AuthorizationPage : Page
     {
         string errorMessage = "";
         if (string.IsNullOrEmpty(SurnameBox.Text))
-            errorMessage += "Введите фамилию\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ\n";
         if (string.IsNullOrEmpty(NameBox.Text))
-            errorMessage += "Введите имя\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ РёРјСЏ\n";
         if (string.IsNullOrEmpty(LoginBox.Text))
-            errorMessage += "Введите логин\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ Р»РѕРіРёРЅ\n";
         else
         {
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
         if (!PasswordRegex().IsMatch(PasswordBox.Password))
-            errorMessage += "Пароль не соответствует требованиям:\n" +
-                "  -минимум 8 символов\n" +
-                "  -cимволы верхнего и нижнего регистра\n" +
-                "  -цифры\n" +
-                "  -специальные символы(#?!@$%^&*-)\n";
+            errorMessage += "РџР°СЂРѕР»СЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏРј:\n" +
+                "  -РјРёРЅРёРјСѓРј 8 СЃРёРјРІРѕР»РѕРІ\n" +
+                "  -cРёРјРІРѕР»С‹ РІРµСЂС…РЅРµРіРѕ Рё РЅРёР¶РЅРµРіРѕ СЂРµРіРёСЃС‚СЂР°\n" +
+                "  -С†РёС„СЂС‹\n" +
+                "  -СЃРїРµС†РёР°Р»СЊРЅС‹Рµ СЃРёРјРІРѕР»С‹(#?!@$%^&*-)\n";
         if (PasswordBox.Password != RepeatPasswordBox.Password)
-            errorMessage += "Пароли не совпадают\n";
+            errorMessage += "РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚\n";
         errorMessage = errorMessage.Trim();
         if (errorMessage.Length > 0)
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = errorMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
             return;
         }
@@ -194,9 +194,9 @@ public sealed partial class AuthorizationPage : Page
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = _viewModel.CommandMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
             return;
         }
@@ -209,13 +209,13 @@ public sealed partial class AuthorizationPage : Page
         _isRegisterPage = true;
         ChangeAuthButton.Click -= OnRegisterPageButtonClick;
         ChangeAuthButton.Click += OnLoginPageButtonClick;
-        ChangeAuthButton.Content = "Войти";
-        PageName.Text = "Регистрация";
+        ChangeAuthButton.Content = "Р’РѕР№С‚Рё";
+        PageName.Text = "Р РµРіРёСЃС‚СЂР°С†РёСЏ";
         SurnameBox.Visibility = Visibility.Visible;
         NameBox.Visibility = Visibility.Visible;
         PatronymicBox.Visibility = Visibility.Visible;
         RepeatPasswordBox.Visibility = Visibility.Visible;
-        AuthButton.Content = "Зарегистрироваться";
+        AuthButton.Content = "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ";
         AuthButton.Click -= OnLoginButtonClick;
         AuthButton.Click += OnRegisterButtonClick;
     }
