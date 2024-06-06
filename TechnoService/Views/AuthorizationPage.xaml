@@ -23,7 +23,7 @@
                  Text="{x:Bind _viewModel.CurrentUser.Surname, Mode=TwoWay}" 
                  Header="Фамилия:" 
                  PlaceholderText="Фамилия" 
-                 TextChanging="OnNameChanging" 
+                 TextChanging="OnTextChanging" 
                  MaxLength="50" 
                  BorderBrush="Red" 
                  Visibility="Collapsed"/>
@@ -31,7 +31,7 @@
                  Text="{x:Bind _viewModel.CurrentUser.Name, Mode=TwoWay}" 
                  Header="Имя:" 
                  PlaceholderText="Имя" 
-                 TextChanging="OnNameChanging" 
+                 TextChanging="OnTextChanging" 
                  MaxLength="50" 
                  BorderBrush="Red" 
                  Visibility="Collapsed"/>
@@ -39,7 +39,7 @@
                  Text="{x:Bind _viewModel.CurrentUser.Patronymic, Mode=TwoWay}" 
                  Header="Отчество:" 
                  PlaceholderText="Отчество" 
-                 TextChanging="OnNameChanging" 
+                 TextChanging="OnTextChanging" 
                  MaxLength="50" 
                  Visibility="Collapsed"/>
         <TextBox x:Name="LoginBox" 

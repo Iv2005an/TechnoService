@@ -1,9 +1,7 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
-using System.Text.RegularExpressions;
+using TechnoService.Services;
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;
@@ -13,25 +11,8 @@ public sealed partial class AuthorizationPage : Page
     public AuthorizationPage() => InitializeComponent();
 
     private readonly AuthorizationPageViewModel _viewModel = new();
-    private readonly LinearGradientBrush _textBoxDefaultBorderBrush = (LinearGradientBrush)new TextBox().BorderBrush;
-    private static readonly SolidColorBrush _textBoxUncorrectBorderBrush = new() { Color = Colors.Red };
     private bool _isRegisterPage = false;
 
-    [GeneratedRegex(@"[^а-яА-Яa-zA-Z]")]
-    private static partial Regex NameCharsRegex();
-    [GeneratedRegex(@"[^a-zA-Z0-9]")]
-    private static partial Regex LoginCharsRegex();
-    [GeneratedRegex(@"[^a-zA-Z0-9#?!@$%^&*_-]")]
-    private static partial Regex PasswordCharsRegex();
-    [GeneratedRegex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,}$")]
-    private static partial Regex PasswordRegex();
-
-    private static void TextCorrector(TextBox textBox, Regex regex)
-    {
-        var currentPosition = textBox.SelectionStart;
-        textBox.Text = regex.Replace(textBox.Text, "");
-        textBox.Select(currentPosition, 0);
-    }
     private void ToLogin()
     {
         _isRegisterPage = false;
@@ -48,17 +29,17 @@ public sealed partial class AuthorizationPage : Page
         AuthButton.Click += OnLoginButtonClick;
     }
 
-    private void OnNameChanging(TextBox sender, TextBoxTextChangingEventArgs args)
+    private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextCorrector(sender, NameCharsRegex());
+        TextService.TextCharsChecker(sender, RegexService.TextCharsRegex());
         if (sender.Name == "PatronymicBox" || sender.Text.Length > 0)
-            sender.BorderBrush = _textBoxDefaultBorderBrush;
+            sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         else
-            sender.BorderBrush = _textBoxUncorrectBorderBrush;
+            sender.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
     }
     private async void OnLoginChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextCorrector(sender, LoginCharsRegex());
+        TextService.TextCharsChecker(sender, RegexService.LoginCharsRegex());
         bool fieldUncorrect = false;
         if (sender.Text.Length == 0)
             fieldUncorrect = true;
@@ -73,20 +54,21 @@ public sealed partial class AuthorizationPage : Page
             if (_isRegisterPage) fieldUncorrect = true;
         }
         if (fieldUncorrect)
-            sender.BorderBrush = _textBoxUncorrectBorderBrush;
+            sender.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
         else
-            sender.BorderBrush = _textBoxDefaultBorderBrush;
+            sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
     }
     private void OnPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args)
     {
-        PasswordBox.Password = PasswordCharsRegex().Replace(PasswordBox.Password, "");
-        if (!PasswordRegex().IsMatch(PasswordBox.Password)) PasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
-        else PasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
+        TextService.PasswordCharsChecker(sender);
+        if (!RegexService.PasswordRegex().IsMatch(PasswordBox.Password))
+            PasswordBox.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
+        else PasswordBox.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         if (_isRegisterPage)
         {
             if (!(PasswordBox.Password == RepeatPasswordBox.Password))
-                RepeatPasswordBox.BorderBrush = _textBoxUncorrectBorderBrush;
-            else RepeatPasswordBox.BorderBrush = _textBoxDefaultBorderBrush;
+                RepeatPasswordBox.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
+            else RepeatPasswordBox.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         }
     }
 
@@ -105,7 +87,7 @@ public sealed partial class AuthorizationPage : Page
             if (string.IsNullOrEmpty(_viewModel.CommandMessage))
                 errorMessage += "Логин не существует\n";
         }
-        if (!PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (!RegexService.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
@@ -153,7 +135,7 @@ public sealed partial class AuthorizationPage : Page
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
-        if (!PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (!RegexService.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
