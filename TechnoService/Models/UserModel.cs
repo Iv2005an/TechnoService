@@ -33,5 +33,7 @@ public sealed partial class UserModel : ObservableObject
     [ObservableProperty]
     private string _login;
     [ObservableProperty]
-    private Password _password = new();
+    private PasswordModel _password = new();
+
+    public string FullName => $"{Surname} {Name} {Patronymic}";
 }
