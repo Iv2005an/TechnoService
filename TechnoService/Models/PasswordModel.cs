@@ -3,9 +3,9 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace TechnoService.Services;
+namespace TechnoService.Models;
 
-public partial class Password : ObservableObject
+public partial class PasswordModel : ObservableObject
 {
     [ObservableProperty]
     private string _passwordString;

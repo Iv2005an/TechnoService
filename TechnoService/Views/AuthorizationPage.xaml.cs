@@ -94,7 +94,7 @@ public sealed partial class AuthorizationPage : Page
     {
 #if DEBUG
         _viewModel.CurrentUser.Login = "admin";
-        _viewModel.CurrentUser.Password.PasswordString = "AdminPass_1";
+        _viewModel.CurrentUser.Password.PasswordString = "Admin_1234";
 #endif
         string errorMessage = "";
         if (string.IsNullOrEmpty(_viewModel.CurrentUser.Login))
