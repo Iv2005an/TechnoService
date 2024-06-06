@@ -4,9 +4,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Text.RegularExpressions;
-#if DEBUG
-using TechnoService.Models;
-#endif
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;
@@ -93,26 +90,14 @@ public sealed partial class AuthorizationPage : Page
         }
     }
 
-
-#if DEBUG
-    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
-    {
-        Frame.Navigate(typeof(MainPage), new UserModel()
-        {
-            Id = 0,
-            Type = UserTypes.Admin,
-            Login = "admin",
-            Password = new()
-            {
-                PasswordString = "Admin_1234"
-            }
-        });
-        return;
-#else
     private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
+#if DEBUG
+        _viewModel.CurrentUser.Login = "admin";
+        _viewModel.CurrentUser.Password.PasswordString = "AdminPass_1";
+#endif
         string errorMessage = "";
-        if (string.IsNullOrEmpty(LoginBox.Text))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Login))
             errorMessage += "Введите логин\n";
         else
         {
@@ -120,7 +105,7 @@ public sealed partial class AuthorizationPage : Page
             if (string.IsNullOrEmpty(_viewModel.CommandMessage))
                 errorMessage += "Логин не существует\n";
         }
-        if (!PasswordRegex().IsMatch(PasswordBox.Password))
+        if (!PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
@@ -153,29 +138,28 @@ public sealed partial class AuthorizationPage : Page
         }
 
         Frame.Navigate(typeof(MainPage), _viewModel.CurrentUser);
-#endif
     }
     private async void OnRegisterButtonClick(object sender, RoutedEventArgs e)
     {
         string errorMessage = "";
-        if (string.IsNullOrEmpty(SurnameBox.Text))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Surname))
             errorMessage += "Введите фамилию\n";
-        if (string.IsNullOrEmpty(NameBox.Text))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Name))
             errorMessage += "Введите имя\n";
-        if (string.IsNullOrEmpty(LoginBox.Text))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Login))
             errorMessage += "Введите логин\n";
         else
         {
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
-        if (!PasswordRegex().IsMatch(PasswordBox.Password))
+        if (!PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
                 "  -цифры\n" +
                 "  -специальные символы(#?!@$%^&*-)\n";
-        if (PasswordBox.Password != RepeatPasswordBox.Password)
+        if (_viewModel.CurrentUser.Password.PasswordString != RepeatPasswordBox.Password)
             errorMessage += "Пароли не совпадают\n";
         errorMessage = errorMessage.Trim();
         if (errorMessage.Length > 0)

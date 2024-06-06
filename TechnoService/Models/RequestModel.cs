@@ -43,5 +43,5 @@ public partial class RequestModel : ObservableObject
             "В ожидании",
             "В процессе",
             "Выполнено",
-            "Не выполнено" }[Convert.ToInt32(Status)];
+            "Не выполнено" }[StatusIndex];
 }

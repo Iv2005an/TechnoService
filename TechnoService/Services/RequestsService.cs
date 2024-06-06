@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TechnoService.Models;
@@ -14,7 +13,7 @@ public class RequestsService
         using SqlCommand createUsersTableCommand = new(
             "IF OBJECT_ID('requests', 'U') IS NULL " +
             "CREATE TABLE requests(" +
-            "id int IDENTITY(1, 1) NOT NULL PRIMARY KEY," +
+            "id int IDENTITY(0, 1) NOT NULL PRIMARY KEY," +
             "start_date datetime NOT NULL DEFAULT GETDATE()," +
             "client_id int NOT NULL," +
             "executor_id int NOT NULL," +

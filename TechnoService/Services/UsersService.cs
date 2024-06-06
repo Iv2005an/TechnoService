@@ -7,13 +7,13 @@ namespace TechnoService.Services;
 
 public static class UsersService
 {
-    private static async Task Init()
+    private static void Init()
     {
         using SqlConnection connection = Database.Connection;
         using SqlCommand createUsersTableCommand = new(
             "IF OBJECT_ID('users', 'U') IS NULL " +
             "CREATE TABLE users(" +
-            "id int IDENTITY(1, 1) NOT NULL PRIMARY KEY," +
+            "id int IDENTITY(0, 1) NOT NULL PRIMARY KEY," +
             "type tinyint NOT NULL DEFAULT 0," +
             "surname nvarchar(50) NOT NULL," +
             "name nvarchar(50) NOT NULL," +
@@ -21,17 +21,17 @@ public static class UsersService
             "login nvarchar(50) UNIQUE NOT NULL," +
             "password nvarchar(128) NOT NULL," +
             "salt nvarchar(128) NOT NULL);", connection);
-        await createUsersTableCommand.ExecuteNonQueryAsync();
+        createUsersTableCommand.ExecuteNonQuery();
 
-        using SqlCommand loginCountCommand = new($"SELECT COUNT(1) FROM users WHERE login=N'admin';", connection);
-        bool isAdminCreated = true;
-        using (SqlDataReader reader = await loginCountCommand.ExecuteReaderAsync())
+        SqlCommand loginCountCommand = new($"SELECT COUNT(1) FROM users WHERE login=N'admin';", connection);
+        bool isAdminNotCreated = true;
+        using (SqlDataReader reader = loginCountCommand.ExecuteReader())
         {
-            if (await reader.ReadAsync()) isAdminCreated = reader.GetInt32(0) == 0;
+            if (reader.Read()) isAdminNotCreated = reader.GetInt32(0) == 0;
         }
-        if (isAdminCreated)
+        if (isAdminNotCreated)
         {
-            using SqlCommand addAdminCommand = new(
+            SqlCommand addAdminCommand = new(
             "INSERT INTO users VALUES(" +
             "2," +
             "N''," +
@@ -41,12 +41,12 @@ public static class UsersService
             "N'D5CFC8FE8BC7C9612FC20ECBB8EC2C14993410CF47B7246D2D1EC176ED03CD4C07606F434403974CE1B44F050A09FF8FD2EC27FD63F84C4548A196661E18FDC2'," +
             "N'71DF5925D84C73C8BFCA22D41AB009A975627ACD4635A9EE44ADAC02AB9CA99E1CEC8E076D7C2934EF1E3FFC96ABCE71C039D217036331CDFBC29C6A4CE6BA57');",
             connection);
-            await addAdminCommand.ExecuteNonQueryAsync();
+            addAdminCommand.ExecuteNonQuery();
         }
     }
     public static async Task<bool> IsLoginFree(string login)
     {
-        await Init();
+        Init();
         using SqlConnection connection = Database.Connection;
         using SqlCommand loginCountCommand = new($"SELECT COUNT(1) FROM users WHERE login=N'{login}';", connection);
         using SqlDataReader reader = await loginCountCommand.ExecuteReaderAsync();
@@ -55,7 +55,7 @@ public static class UsersService
     }
     public static async Task<string> Register(UserModel user)
     {
-        await Init();
+        Init();
         if (!await IsLoginFree(user.Login)) return "Логин занят";
         user.Password.ComputeHash(null);
         using SqlConnection connection = Database.Connection;
@@ -74,7 +74,7 @@ public static class UsersService
     }
     public static async Task<UserModel> Login(UserModel user)
     {
-        await Init();
+        Init();
         if (await IsLoginFree(user.Login)) return null;
         using SqlConnection connection = Database.Connection;
         using SqlCommand getSaltCommand = new(

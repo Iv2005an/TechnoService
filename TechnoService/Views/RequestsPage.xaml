@@ -18,7 +18,7 @@
                 <TextBlock Text="Заявки" Margin="12,14"/>
             </CommandBar.Content>
         </CommandBar>
-        <controls:DataGrid ItemsSource="{x:Bind _viewModel.Requests}" AutoGenerateColumns="False" IsReadOnly="True">
+        <controls:DataGrid ItemsSource="{x:Bind _viewModel.Requests, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True">
             <controls:DataGrid.DataContext>
                 <models:RequestModel/>
             </controls:DataGrid.DataContext>
@@ -30,7 +30,7 @@
                 <controls:DataGridTextColumn Header="Устройство" Binding="{Binding Device}"/>
                 <controls:DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
                 <controls:DataGridTextColumn Header="Описание" Binding="{Binding Description}"/>
-                <controls:DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                <controls:DataGridTextColumn Header="Статус" Binding="{Binding StatusName}"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </StackPanel>

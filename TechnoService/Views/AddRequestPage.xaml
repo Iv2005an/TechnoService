@@ -9,8 +9,8 @@
     mc:Ignorable="d">
 
     <StackPanel Spacing="8">
-        <TextBox Text="{x:Bind _viewModel.Request.Device}" Header="Оборудование:" PlaceholderText="Оборудование"/>
-        <TextBox Text="{x:Bind _viewModel.Request.Type}" Header="Тип:" PlaceholderText="Тип"/>
-        <TextBox Text="{x:Bind _viewModel.Request.Description}" Header="Описание:" PlaceholderText="Описание"/>
+        <TextBox Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}" Header="Оборудование:" PlaceholderText="Оборудование"/>
+        <TextBox Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}" Header="Тип:" PlaceholderText="Тип"/>
+        <TextBox Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}" Header="Описание:" PlaceholderText="Описание"/>
     </StackPanel>
 </Page>
