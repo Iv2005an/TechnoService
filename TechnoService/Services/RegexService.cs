@@ -5,7 +5,7 @@ namespace TechnoService.Services;
 public partial class RegexService
 {
     [GeneratedRegex(@"[^а-яА-Яa-zA-Z]")]
-    public static partial Regex TextCharsRegex();
+    public static partial Regex NameCharsRegex();
     [GeneratedRegex(@"[^a-zA-Z0-9]")]
     public static partial Regex LoginCharsRegex();
     [GeneratedRegex(@"[^a-zA-Z0-9#?!@$%^&*_-]")]

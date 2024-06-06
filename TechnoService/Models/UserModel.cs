@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Data;
-using TechnoService.Services;
 
 namespace TechnoService.Models;
 

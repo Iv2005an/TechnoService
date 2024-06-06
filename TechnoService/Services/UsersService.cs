@@ -116,8 +116,6 @@ public static class UsersService
             $"WHERE id={id}",
             connection);
         using SqlDataReader reader = getUserCommand.ExecuteReader();
-        if (reader.Read())
-            return new UserModel(reader);
-        return null;
+        return reader.Read() ? new UserModel(reader) : null;
     }
 }

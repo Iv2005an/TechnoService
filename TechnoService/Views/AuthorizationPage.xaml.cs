@@ -31,7 +31,7 @@ public sealed partial class AuthorizationPage : Page
 
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextService.TextCharsChecker(sender, RegexService.TextCharsRegex());
+        TextService.NameCharsChecker(sender, RegexService.NameCharsRegex());
         if (sender.Name == "PatronymicBox" || sender.Text.Length > 0)
             sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         else
@@ -39,7 +39,7 @@ public sealed partial class AuthorizationPage : Page
     }
     private async void OnLoginChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextService.TextCharsChecker(sender, RegexService.LoginCharsRegex());
+        TextService.NameCharsChecker(sender, RegexService.LoginCharsRegex());
         bool fieldUncorrect = false;
         if (sender.Text.Length == 0)
             fieldUncorrect = true;

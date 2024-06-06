@@ -1,6 +1,8 @@
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Threading.Tasks;
 using TechnoService.Models;
+using TechnoService.Services;
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;
@@ -15,8 +17,37 @@ public sealed partial class AddRequestPage : Page
 
     public readonly AddRequestPageViewModel _viewModel = new();
 
-    public async Task AddRequest()
+    private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        await _viewModel.AddRequestCommand.ExecuteAsync(null);
+        TextService.TextCharsChecker(sender);
+        if (sender.Text.Length > 0)
+            sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
+        else
+            sender.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
+    }
+
+    public async Task<RequestModel> AddRequest()
+    {
+        string errorMessage = "";
+        if (string.IsNullOrEmpty(_viewModel.Request.Device))
+            errorMessage += "¬ведите название оборудовани€\n";
+        if (string.IsNullOrEmpty(_viewModel.Request.Type))
+            errorMessage += "¬ведите тип оборудовани€\n";
+        if (string.IsNullOrEmpty(_viewModel.Request.Description))
+            errorMessage += "¬ведите описание проблемы\n";
+        errorMessage = errorMessage.Trim();
+        if (string.IsNullOrEmpty(errorMessage))
+        {
+            await _viewModel.AddRequestCommand.ExecuteAsync(null);
+            return _viewModel.Request;
+        }
+        await new ContentDialog()
+        {
+            XamlRoot = XamlRoot,
+            Title = "ќшибка",
+            Content = errorMessage,
+            CloseButtonText = "ќк",
+        }.ShowAsync();
+        return null;
     }
 }
