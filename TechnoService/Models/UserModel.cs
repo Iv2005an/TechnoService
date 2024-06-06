@@ -35,4 +35,5 @@ public sealed partial class UserModel : ObservableObject
     private PasswordModel _password = new();
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
+    public string NameWithInitials => $"{Surname} {Name[0]}. {Patronymic[0]}.";
 }
