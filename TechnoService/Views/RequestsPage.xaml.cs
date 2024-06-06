@@ -1,7 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.WinUI.UI.Controls;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Linq;
 using TechnoService.Models;
 using TechnoService.Services;
 using TechnoService.ViewModels;
@@ -43,6 +45,54 @@ public sealed partial class RequestsPage : Page
         {
             await addRequestPage.AddRequest();
             _viewModel.Requests = new(await RequestsService.GetRequests());
+        }
+    }
+
+    private void DataGridSorting(object sender, DataGridColumnEventArgs e)
+    {
+        Func<RequestModel, object> sorter = null;
+        switch (e.Column.Tag)
+        {
+            case "Id":
+                sorter = (request) => request.Id;
+                break;
+            case "StartDate":
+                sorter = (request) => request.StartDate;
+                break;
+            case "Client":
+                sorter = (request) => request.Client.FullName;
+                break;
+            case "Executor":
+                sorter = (request) => request.Executor.FullName;
+                break;
+            case "Device":
+                sorter = (request) => request.Device;
+                break;
+            case "Type":
+                sorter = (request) => request.Type;
+                break;
+            case "Status":
+                sorter = (request) => request.StatusName;
+                break;
+            default:
+                break;
+        }
+        if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
+        {
+            _viewModel.Requests = new(_viewModel.Requests.OrderBy(sorter));
+            e.Column.SortDirection = DataGridSortDirection.Ascending;
+        }
+        else
+        {
+            _viewModel.Requests = new(_viewModel.Requests.OrderByDescending(sorter));
+            e.Column.SortDirection = DataGridSortDirection.Descending;
+        }
+        foreach (var dgColumn in dg.Columns)
+        {
+            if (dgColumn.DisplayIndex != e.Column.DisplayIndex)
+            {
+                dgColumn.SortDirection = null;
+            }
         }
     }
 }
