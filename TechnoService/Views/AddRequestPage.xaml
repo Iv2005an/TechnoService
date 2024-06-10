@@ -8,9 +8,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Spacing="8">
-        <TextBox Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}" TextChanging="OnTextChanging" Header="Оборудование:" PlaceholderText="Оборудование" MaxLength="255" BorderBrush="Red"/>
-        <TextBox Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}" TextChanging="OnTextChanging" Header="Тип:" PlaceholderText="Тип" MaxLength="255" BorderBrush="Red"/>
-        <TextBox Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}" TextChanging="OnTextChanging" Header="Описание:" PlaceholderText="Описание" MaxLength="1024" BorderBrush="Red"/>
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel Spacing="8">
+            <TextBox Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}" 
+                 TextChanging="OnTextChanging" 
+                 Header="Оборудование:" 
+                 PlaceholderText="Оборудование" 
+                 MaxLength="255" 
+                 TextWrapping="Wrap"
+                 BorderBrush="Red"/>
+            <TextBox Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}" 
+                 TextChanging="OnTextChanging" 
+                 Header="Тип:" 
+                 PlaceholderText="Тип" 
+                 MaxLength="255" 
+                 TextWrapping="Wrap"
+                 BorderBrush="Red"/>
+            <TextBox Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}" 
+                 TextChanging="OnTextChanging" 
+                 Header="Описание:" 
+                 PlaceholderText="Описание" 
+                 MaxLength="1024"
+                 TextWrapping="Wrap"
+                 AcceptsReturn="True"
+                 BorderBrush="Red"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -1,8 +1,8 @@
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
+using TechnoService.Helpers;
 using TechnoService.Models;
-using TechnoService.Services;
 using TechnoService.Styles;
 using TechnoService.ViewModels;
 
@@ -20,7 +20,7 @@ public sealed partial class AddRequestPage : Page
 
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextService.TextCharsChecker(sender);
+        TextHelper.TextCharsChecker(sender);
         if (sender.Text.Length > 0)
             sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         else

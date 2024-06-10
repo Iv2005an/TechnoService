@@ -9,7 +9,53 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock Text="{x:Bind _viewModel.EditRequest.Device}"/>
-    </Grid>
+    <ScrollViewer Margin="0,16,0,16">
+        <StackPanel Spacing="8" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500">
+            <TextBlock Text="Изменение заявки" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="ID: "/>
+                <TextBlock Text="{x:Bind _viewModel.Request.Id}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Дата добавления:"/>
+                <TextBlock Text="{x:Bind _viewModel.Request.StartDate}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Клиент:"/>
+                <TextBlock Text="{x:Bind _viewModel.Request.Client.NameWithInitials}"/>
+            </StackPanel>
+            <ComboBox x:Name="ExecutorComboBox"  Header="Исполнитель:"
+                      Width="500"
+                      ItemsSource="{x:Bind _viewModel.Executors}" 
+                      SelectedItem="{x:Bind _viewModel.Request.Executor, Mode=TwoWay}"/>
+            <TextBox Header="Оборудование:" 
+                     Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}"
+                     TextChanging="OnTextChanging" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+            <TextBox Header="Тип:" 
+                     Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}"
+                     TextChanging="OnTextChanging" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+            <TextBox Header="Описание:"
+                     Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}"
+                     TextChanging="OnTextChanging" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Статус:"/>
+                <TextBlock Text="{x:Bind _viewModel.Request.StatusName}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Отмена" Width="100" Click="CancelButtonClick"/>
+                <Button Grid.Column="1" 
+                        Content="Изменить" 
+                        Style="{StaticResource AccentButtonStyle}" 
+                        Width="100"
+                        Click="EditButtonClick"
+                        HorizontalAlignment="Right"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

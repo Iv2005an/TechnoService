@@ -7,7 +7,7 @@ namespace TechnoService.Services;
 
 public class RequestsService
 {
-    private static async Task Init()
+    private static void Init()
     {
         using SqlConnection connection = Database.Connection;
         using SqlCommand createUsersTableCommand = new(
@@ -24,11 +24,11 @@ public class RequestsService
             "FOREIGN KEY (client_id) REFERENCES users (Id)," +
             "FOREIGN KEY (executor_id) REFERENCES users (Id));",
             connection);
-        await createUsersTableCommand.ExecuteNonQueryAsync();
+        createUsersTableCommand.ExecuteNonQuery();
     }
     public static async Task AddRequest(RequestModel request)
     {
-        await Init();
+        Init();
         using SqlConnection connection = Database.Connection;
         using SqlCommand addRequestCommand = new(
             "INSERT INTO requests VALUES(" +
@@ -43,7 +43,7 @@ public class RequestsService
     }
     public static async Task<List<RequestModel>> GetRequests()
     {
-        await Init();
+        Init();
         using SqlConnection connection = Database.Connection;
         using SqlCommand getRequestsCommand = new("SELECT * FROM requests", connection);
         using SqlDataReader reader = await getRequestsCommand.ExecuteReaderAsync();
@@ -51,5 +51,21 @@ public class RequestsService
         while (await reader.ReadAsync())
             requests.Add(new(reader));
         return requests;
+    }
+    public static async Task UpdateRequest(RequestModel request)
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand updateRequestCommand = new(
+            "UPDATE requests SET " +
+            $"start_date='{request.StartDate}'," +
+            $"client_id={request.Client.Id}," +
+            $"executor_id={request.Executor.Id}," +
+            $"device='{request.Device}'," +
+            $"type='{request.Type}'," +
+            $"description='{request.Description}' " +
+            $"WHERE id={request.Id}",
+            connection);
+        await updateRequestCommand.ExecuteNonQueryAsync();
     }
 }

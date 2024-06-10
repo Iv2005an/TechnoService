@@ -1,14 +1,17 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using System.Text.RegularExpressions;
 
-namespace TechnoService.Services;
+namespace TechnoService.Helpers;
 
-public static class TextService
+public static class TextHelper
 {
     public static void TextCharsChecker(TextBox textBox)
     {
         var currentPosition = textBox.SelectionStart;
-        textBox.Text = textBox.Text.TrimStart().Replace("  ", " ");
+        textBox.Text = textBox.Text.TrimStart()
+            .Replace("  ", " ")
+            .Replace("\n\n", "\n")
+            .Replace("\r\r", "\r");
         textBox.Select(currentPosition, 0);
     }
 
@@ -19,5 +22,5 @@ public static class TextService
         textBox.Select(currentPosition, 0);
     }
     public static void PasswordCharsChecker(PasswordBox passwordBox) =>
-        passwordBox.Password = RegexService.PasswordCharsRegex().Replace(passwordBox.Password, "");
+        passwordBox.Password = RegexHelper.PasswordCharsRegex().Replace(passwordBox.Password, "");
 }

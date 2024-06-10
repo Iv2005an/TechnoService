@@ -36,4 +36,9 @@ public sealed partial class UserModel : ObservableObject
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
     public string NameWithInitials => $"{Surname} {Name[0]}. {Patronymic[0]}.";
+
+    public override string ToString()
+    {
+        return FullName;
+    }
 }

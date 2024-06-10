@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TechnoService.Models;
 
@@ -109,6 +110,7 @@ public static class UsersService
     }
     public static UserModel GetUser(int id)
     {
+        Init();
         using SqlConnection connection = Database.Connection;
         using SqlCommand getUserCommand = new(
             "SELECT * " +
@@ -117,5 +119,20 @@ public static class UsersService
             connection);
         using SqlDataReader reader = getUserCommand.ExecuteReader();
         return reader.Read() ? new UserModel(reader) : null;
+    }
+    public static List<UserModel> GetExecutors()
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand getExecutorsCommand = new(
+            "SELECT * " +
+            "FROM users " +
+            $"WHERE type={Convert.ToInt32(UserTypes.Admin)}" +
+            $"OR type={Convert.ToInt32(UserTypes.Executor)}",
+            connection);
+        using SqlDataReader reader = getExecutorsCommand.ExecuteReader();
+        List<UserModel> executors = [];
+        while (reader.Read()) executors.Add(new(reader));
+        return executors;
     }
 }

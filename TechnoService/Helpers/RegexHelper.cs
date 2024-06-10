@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace TechnoService.Services;
+namespace TechnoService.Helpers;
 
-public partial class RegexService
+public partial class RegexHelper
 {
     [GeneratedRegex(@"[^а-яА-Яa-zA-Z]")]
     public static partial Regex NameCharsRegex();

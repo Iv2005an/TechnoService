@@ -9,8 +9,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Margin="16,0,0,8" Spacing="8"  HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Статистика" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,16,0,0"/>
+    <StackPanel Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Статистика" Style="{ThemeResource TitleTextBlockStyle}"/>
         <ComboBox Header="Категория" PlaceholderText="Выберите категорию" Width="200">
             <x:String>Все</x:String>
         </ComboBox>

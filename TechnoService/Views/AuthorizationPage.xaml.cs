@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using TechnoService.Services;
+using TechnoService.Helpers;
 using TechnoService.Styles;
 using TechnoService.ViewModels;
 
@@ -32,7 +32,7 @@ public sealed partial class AuthorizationPage : Page
 
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextService.NameCharsChecker(sender, RegexService.NameCharsRegex());
+        TextHelper.NameCharsChecker(sender, RegexHelper.NameCharsRegex());
         if (sender.Name == "PatronymicBox" || sender.Text.Length > 0)
             sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         else
@@ -40,7 +40,7 @@ public sealed partial class AuthorizationPage : Page
     }
     private async void OnLoginChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextService.NameCharsChecker(sender, RegexService.LoginCharsRegex());
+        TextHelper.NameCharsChecker(sender, RegexHelper.LoginCharsRegex());
         bool fieldUncorrect = false;
         if (sender.Text.Length == 0)
             fieldUncorrect = true;
@@ -61,8 +61,8 @@ public sealed partial class AuthorizationPage : Page
     }
     private void OnPasswordChanging(PasswordBox sender, PasswordBoxPasswordChangingEventArgs args)
     {
-        TextService.PasswordCharsChecker(sender);
-        if (!RegexService.PasswordRegex().IsMatch(PasswordBox.Password))
+        TextHelper.PasswordCharsChecker(sender);
+        if (!RegexHelper.PasswordRegex().IsMatch(PasswordBox.Password))
             PasswordBox.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
         else PasswordBox.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         if (_isRegisterPage)
@@ -88,7 +88,7 @@ public sealed partial class AuthorizationPage : Page
             if (string.IsNullOrEmpty(_viewModel.CommandMessage))
                 errorMessage += "Логин не существует\n";
         }
-        if (!RegexService.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (!RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
@@ -136,7 +136,7 @@ public sealed partial class AuthorizationPage : Page
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
-        if (!RegexService.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (!RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
