@@ -17,6 +17,7 @@ public sealed partial class RequestsPage : Page
     private readonly RequestsPageViewModel _viewModel = new();
     protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
+        Frame.BackStack.Clear();
         UserModel currentUser = (UserModel)e.Parameter;
         _viewModel.CurrentUser = currentUser;
         _viewModel.Requests = new(await RequestsService.GetRequests());
@@ -48,8 +49,10 @@ public sealed partial class RequestsPage : Page
             _viewModel.Requests = new(await RequestsService.GetRequests());
         }
     }
+    private void EditRequestClick(object sender, RoutedEventArgs e) =>
+        Frame.Navigate(typeof(EditRequestPage), RequestsDataGrid.SelectedItem);
 
-    private void DataGridSorting(object sender, DataGridColumnEventArgs e)
+    private void RequestsDataGridSorting(object sender, DataGridColumnEventArgs e)
     {
         Func<RequestModel, object> sorter = null;
         switch (e.Column.Tag)
@@ -95,6 +98,11 @@ public sealed partial class RequestsPage : Page
                 dgColumn.SortDirection = null;
             }
         }
+    }
+    private void RequestsDataGridSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (RequestsDataGrid.SelectedItem != null) EditRequestButton.IsEnabled = true;
+        else EditRequestButton.IsEnabled = false;
     }
 
     private void RequestsSearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

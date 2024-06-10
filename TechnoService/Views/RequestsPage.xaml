@@ -13,7 +13,8 @@
 
     <StackPanel>
         <CommandBar DefaultLabelPosition="Right">
-            <AppBarButton Icon="Add" Label="Добавить заявку" Click="AddRequestClick"/>
+            <AppBarButton x:Name="EditRequestButton" Icon="Edit" Label="Изменить" Click="EditRequestClick" IsEnabled="False"/>
+            <AppBarButton Icon="Add" Label="Добавить" Click="AddRequestClick"/>
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Заявки" Margin="12,14"/>
@@ -27,7 +28,8 @@
         <controls:DataGrid x:Name="RequestsDataGrid"
                            ItemsSource="{x:Bind _viewModel.Requests, Mode=OneWay}"
                            AutoGenerateColumns="False"
-                           Sorting="DataGridSorting"
+                           Sorting="RequestsDataGridSorting"
+                           SelectionChanged="RequestsDataGridSelectionChanged"
                            IsReadOnly="True">
             <controls:DataGrid.DataContext>
                 <models:RequestModel/>

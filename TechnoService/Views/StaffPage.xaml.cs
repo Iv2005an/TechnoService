@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 
 namespace TechnoService.Views;
@@ -23,6 +24,11 @@ public sealed partial class StaffPage : Page
                 Type = "Исполнитель",
             });
         }
+    }
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        Frame.BackStack.Clear();
+        base.OnNavigatedTo(e);
     }
 
     public record Executor

@@ -26,6 +26,10 @@ public sealed partial class MainPage : Page
         NavigationView.SelectedItem = RequestsMenuItem;
         base.OnNavigatedTo(e);
     }
+    private void NavigationBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+    {
+        if (ContentFrame.CanGoBack) ContentFrame.GoBack();
+    }
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         switch (((NavigationViewItem)sender.SelectedItem).Tag)

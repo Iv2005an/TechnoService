@@ -9,12 +9,16 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView x:Name="NavigationView" PaneDisplayMode="LeftCompact" SelectionChanged="NavigationViewSelectionChanged">
+    <NavigationView x:Name="NavigationView"
+                    PaneDisplayMode="LeftCompact"
+                    SelectionChanged="NavigationViewSelectionChanged"
+                    IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
+                    BackRequested="NavigationBackRequested">
         <NavigationView.MenuItems>
             <NavigationViewItem x:Name="RequestsMenuItem" Icon="List" Content="Заявки" Tag="Requests"/>
             <NavigationViewItem x:Name="StaffMenuItem" Icon="People" Content="Персонал" Tag="Staff"/>
             <NavigationViewItem x:Name="StatisticsMenuItem" Icon="Admin" Content="Статистика" Tag="Statistics"/>
         </NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" Margin="0,48,0,0"/>
+        <Frame x:Name="ContentFrame" Margin="0,48,0,0"/>
     </NavigationView>
 </Page>

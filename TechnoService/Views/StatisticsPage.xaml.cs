@@ -11,6 +11,7 @@ public sealed partial class StatisticsPage : Page
     private readonly StatisticsPageViewModel _viewModel = new();
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        Frame.BackStack.Clear();
         UserModel currentUser = (UserModel)e.Parameter;
         _viewModel.CurrentUser = currentUser;
         switch (currentUser.Type)
