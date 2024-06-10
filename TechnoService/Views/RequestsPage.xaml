@@ -27,7 +27,7 @@
             </controls:DataGrid.DataContext>
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Tag="Id" Header="ID" Binding="{Binding Id}" MinWidth="60"/>
-                <controls:DataGridTextColumn Tag="StartDate" Header="Дата добавления" Binding="{Binding StartDate}" MinWidth="140" Width="150"/>
+                <controls:DataGridTextColumn Tag="StartDate" Header="Дата добавления" Binding="{Binding StartDate}" MinWidth="140" Width="155"/>
                 <controls:DataGridTextColumn Tag="Client" Header="Клиент" Binding="{Binding Client.NameWithInitials}" MinWidth="85" Width="150"/>
                 <controls:DataGridTextColumn Tag="Executor" Header="Исполнитель" Binding="{Binding Executor.NameWithInitials}" MinWidth="120" Width="150"/>
                 <controls:DataGridTextColumn Tag="Device" Header="Оборудование" Binding="{Binding Device}" MinWidth="110" Width="200"/>
