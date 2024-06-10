@@ -44,4 +44,14 @@ public partial class RequestModel : ObservableObject
             "В процессе",
             "Выполнено",
             "Не выполнено" }[StatusIndex];
+
+    public bool IsSuitable(string searchText) =>
+        Id.ToString().Contains(searchText) ||
+        StartDate.ToString().Contains(searchText) ||
+        Client.FullName.Contains(searchText) ||
+        Executor.FullName.Contains(searchText) ||
+        Device.Contains(searchText) ||
+        Type.Contains(searchText) ||
+        Description.Contains(searchText) ||
+        StatusName.Contains(searchText);
 }

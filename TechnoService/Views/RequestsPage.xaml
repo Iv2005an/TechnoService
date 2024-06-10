@@ -15,10 +15,13 @@
         <CommandBar DefaultLabelPosition="Right">
             <AppBarButton Icon="Add" Label="Добавить заявку" Click="AddRequestClick"/>
             <CommandBar.Content>
-                <TextBlock Text="Заявки" Margin="12,14"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Заявки" Margin="12,14"/>
+                    <AutoSuggestBox Width="300" Height="32" PlaceholderText="Поиск по заявкам" QueryIcon="Find" TextChanged="RequestsSearchTextChanged"/>
+                </StackPanel>
             </CommandBar.Content>
         </CommandBar>
-        <controls:DataGrid x:Name="dg" ItemsSource="{x:Bind _viewModel.Requests, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGridSorting">
+        <controls:DataGrid x:Name="dg" ItemsSource="{x:Bind _viewModel.Requests, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGridSorting">
             <controls:DataGrid.DataContext>
                 <models:RequestModel/>
             </controls:DataGrid.DataContext>

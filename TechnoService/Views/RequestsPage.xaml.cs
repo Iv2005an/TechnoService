@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using TechnoService.Models;
 using TechnoService.Services;
@@ -94,5 +95,13 @@ public sealed partial class RequestsPage : Page
                 dgColumn.SortDirection = null;
             }
         }
+    }
+
+    private void RequestsSearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            if (!string.IsNullOrEmpty(sender.Text))
+                dg.ItemsSource = new ObservableCollection<RequestModel>(_viewModel.Requests.Where((request) => request.IsSuitable(sender.Text)));
+            else dg.ItemsSource = _viewModel.Requests;
     }
 }
