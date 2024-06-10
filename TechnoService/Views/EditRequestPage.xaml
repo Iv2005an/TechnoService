@@ -26,8 +26,9 @@
             </StackPanel>
             <ComboBox x:Name="ExecutorComboBox"  Header="Исполнитель:"
                       Width="500"
-                      ItemsSource="{x:Bind _viewModel.Executors}" 
-                      SelectedItem="{x:Bind _viewModel.Request.Executor, Mode=TwoWay}"/>
+                      ItemsSource="{x:Bind _viewModel.Executors}"
+                      SelectedItem="{x:Bind _viewModel.Request.Executor, Mode=TwoWay}"
+                      SelectionChanged="ExecutorsSelectionChanged"/>
             <TextBox Header="Оборудование:" 
                      Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}"
                      TextChanging="OnTextChanging" 

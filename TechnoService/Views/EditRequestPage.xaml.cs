@@ -63,4 +63,13 @@ public sealed partial class EditRequestPage : Page
             if (Frame.CanGoBack) Frame.GoBack();
         }
     }
+
+    private void ExecutorsSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        ComboBox comboBox = (ComboBox)sender;
+        UserModel selectedExecutor = (UserModel)comboBox.SelectedItem;
+        if (selectedExecutor.Type == UserTypes.Executor)
+            _viewModel.Request.Status = StatusTypes.InProgress;
+        else _viewModel.Request.Status = StatusTypes.Pending;
+    }
 }
