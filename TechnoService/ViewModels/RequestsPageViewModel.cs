@@ -8,7 +8,6 @@ public partial class RequestsPageViewModel : ObservableObject
 {
     [ObservableProperty]
     private UserModel _currentUser;
-
     [ObservableProperty]
     private ObservableCollection<RequestModel> _requests;
 }

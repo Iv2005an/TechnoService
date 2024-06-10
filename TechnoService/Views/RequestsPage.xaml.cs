@@ -88,7 +88,7 @@ public sealed partial class RequestsPage : Page
             _viewModel.Requests = new(_viewModel.Requests.OrderByDescending(sorter));
             e.Column.SortDirection = DataGridSortDirection.Descending;
         }
-        foreach (var dgColumn in dg.Columns)
+        foreach (var dgColumn in RequestsDataGrid.Columns)
         {
             if (dgColumn.DisplayIndex != e.Column.DisplayIndex)
             {
@@ -101,7 +101,7 @@ public sealed partial class RequestsPage : Page
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             if (!string.IsNullOrEmpty(sender.Text))
-                dg.ItemsSource = new ObservableCollection<RequestModel>(_viewModel.Requests.Where((request) => request.IsSuitable(sender.Text)));
-            else dg.ItemsSource = _viewModel.Requests;
+                RequestsDataGrid.ItemsSource = new ObservableCollection<RequestModel>(_viewModel.Requests.Where((request) => request.IsSuitable(sender.Text)));
+            else RequestsDataGrid.ItemsSource = _viewModel.Requests;
     }
 }

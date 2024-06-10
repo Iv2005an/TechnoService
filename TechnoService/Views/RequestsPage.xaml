@@ -17,23 +17,54 @@
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Заявки" Margin="12,14"/>
-                    <AutoSuggestBox Width="300" Height="32" PlaceholderText="Поиск по заявкам" QueryIcon="Find" TextChanged="RequestsSearchTextChanged"/>
+                    <AutoSuggestBox Width="300" Height="32"
+                                    PlaceholderText="Поиск по заявкам"
+                                    QueryIcon="Find"
+                                    TextChanged="RequestsSearchTextChanged"/>
                 </StackPanel>
             </CommandBar.Content>
         </CommandBar>
-        <controls:DataGrid x:Name="dg" ItemsSource="{x:Bind _viewModel.Requests, Mode=OneWay}" AutoGenerateColumns="False" IsReadOnly="True" Sorting="DataGridSorting">
+        <controls:DataGrid x:Name="RequestsDataGrid"
+                           ItemsSource="{x:Bind _viewModel.Requests, Mode=OneWay}"
+                           AutoGenerateColumns="False"
+                           Sorting="DataGridSorting"
+                           IsReadOnly="True">
             <controls:DataGrid.DataContext>
                 <models:RequestModel/>
             </controls:DataGrid.DataContext>
             <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Tag="Id" Header="ID" Binding="{Binding Id}" MinWidth="60"/>
-                <controls:DataGridTextColumn Tag="StartDate" Header="Дата добавления" Binding="{Binding StartDate}" MinWidth="140" Width="155"/>
-                <controls:DataGridTextColumn Tag="Client" Header="Клиент" Binding="{Binding Client.NameWithInitials}" MinWidth="85" Width="150"/>
-                <controls:DataGridTextColumn Tag="Executor" Header="Исполнитель" Binding="{Binding Executor.NameWithInitials}" MinWidth="120" Width="150"/>
-                <controls:DataGridTextColumn Tag="Device" Header="Оборудование" Binding="{Binding Device}" MinWidth="110" Width="200"/>
-                <controls:DataGridTextColumn Tag="Type" Header="Тип" Binding="{Binding Type}" MinWidth="70" Width="125"/>
-                <controls:DataGridTextColumn Header="Описание" Binding="{Binding Description}" MinWidth="100" Width="250" CanUserSort="False"/>
-                <controls:DataGridTextColumn Tag="Status" Header="Статус" Binding="{Binding StatusName}" MinWidth="90" Width="125"/>
+                <controls:DataGridTextColumn Tag="Id"
+                                             Header="ID"
+                                             Binding="{Binding Id}"
+                                             MinWidth="60"/>
+                <controls:DataGridTextColumn Tag="StartDate"
+                                             Header="Дата добавления"
+                                             Binding="{Binding StartDate}"
+                                             MinWidth="140" Width="155"/>
+                <controls:DataGridTextColumn Tag="Client"
+                                             Header="Клиент"
+                                             Binding="{Binding Client.NameWithInitials}"
+                                             MinWidth="85" Width="150"/>
+                <controls:DataGridTextColumn Tag="Executor"
+                                             Header="Исполнитель"
+                                             Binding="{Binding Executor.NameWithInitials}"
+                                             MinWidth="120" Width="150"/>
+                <controls:DataGridTextColumn Tag="Device"
+                                             Header="Оборудование"
+                                             Binding="{Binding Device}"
+                                             MinWidth="110" Width="200"/>
+                <controls:DataGridTextColumn Tag="Type"
+                                             Header="Тип"
+                                             Binding="{Binding Type}"
+                                             MinWidth="70" Width="125"/>
+                <controls:DataGridTextColumn Header="Описание"
+                                             Binding="{Binding Description}"
+                                             MinWidth="100" Width="250"
+                                             CanUserSort="False"/>
+                <controls:DataGridTextColumn Tag="Status"
+                                             Header="Статус"
+                                             Binding="{Binding StatusName}"
+                                             MinWidth="90" Width="125"/>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
     </StackPanel>
