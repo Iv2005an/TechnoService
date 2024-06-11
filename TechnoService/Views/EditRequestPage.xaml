@@ -46,7 +46,7 @@
                      AcceptsReturn="True"/>
             <StackPanel Spacing="4" Orientation="Horizontal">
                 <TextBlock Text="Статус:"/>
-                <TextBlock Text="{x:Bind _viewModel.Request.StatusName}"/>
+                <TextBlock x:Name="Status" Text="{x:Bind _viewModel.Request.StatusName}"/>
             </StackPanel>
             <StackPanel Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Отмена" Width="100" Click="CancelButtonClick"/>

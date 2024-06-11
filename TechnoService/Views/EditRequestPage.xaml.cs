@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Linq;
 using TechnoService.Helpers;
 using TechnoService.Models;
 using TechnoService.Styles;
@@ -10,18 +11,16 @@ namespace TechnoService.Views;
 
 public sealed partial class EditRequestPage : Page
 {
-    public EditRequestPage()
-    {
-        InitializeComponent();
-        ExecutorComboBox.SelectedIndex = 0;
-    }
+    public EditRequestPage() => InitializeComponent();
 
     private readonly EditRequestPageViewModel _viewModel = new();
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        RequestModel editRequest = (RequestModel)e.Parameter;
-        _viewModel.Request = editRequest;
-        ExecutorComboBox.SelectedItem = editRequest.Executor;
+        RequestModel request = (RequestModel)e.Parameter;
+        _viewModel.Request = request;
+        ExecutorComboBox.SelectedIndex = _viewModel.Executors.IndexOf(
+            _viewModel.Executors.Where(
+                (executor) => executor.Id == request.Executor.Id).FirstOrDefault());
         base.OnNavigatedTo(e);
     }
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
@@ -71,5 +70,6 @@ public sealed partial class EditRequestPage : Page
         if (selectedExecutor.Type == UserTypes.Executor)
             _viewModel.Request.Status = StatusTypes.InProgress;
         else _viewModel.Request.Status = StatusTypes.Pending;
+        Status.Text = _viewModel.Request.StatusName;
     }
 }

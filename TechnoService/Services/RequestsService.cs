@@ -63,7 +63,8 @@ public class RequestsService
             $"executor_id={request.Executor.Id}," +
             $"device='{request.Device}'," +
             $"type='{request.Type}'," +
-            $"description='{request.Description}' " +
+            $"description='{request.Description}'," +
+            $"status={request.StatusIndex} " +
             $"WHERE id={request.Id}",
             connection);
         await updateRequestCommand.ExecuteNonQueryAsync();

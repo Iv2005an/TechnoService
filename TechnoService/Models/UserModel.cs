@@ -36,12 +36,25 @@ public sealed partial class UserModel : ObservableObject
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
     public string NameWithInitials => $"{Surname} {Name[0]}. {Patronymic[0]}.";
-    public int TypeIndex => Convert.ToInt32(Type);
-    public string TypeName =>
-    new string[] {
+    public string[] TypesNames => [
             "Клиент",
             "Исполнитель",
-            "Админ" }[TypeIndex];
+            "Админ" ];
+    public int TypeIndex
+    {
+        get
+        {
+            return Convert.ToInt32(Type);
+        }
+        set
+        {
+            Type = (UserTypes)Enum.GetValues(typeof(UserTypes)).GetValue(value);
+        }
+
+    }
+
+    public string TypeName => TypesNames[TypeIndex];
+
     public bool IsSuitable(string searchText) =>
         Id.ToString().Contains(searchText) ||
         TypeName.Contains(searchText) ||
