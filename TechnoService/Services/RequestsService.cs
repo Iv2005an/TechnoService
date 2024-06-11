@@ -41,11 +41,14 @@ public class RequestsService
             $"{request.StatusIndex});", connection);
         await addRequestCommand.ExecuteNonQueryAsync();
     }
-    public static async Task<List<RequestModel>> GetRequests()
+    public static async Task<List<RequestModel>> GetRequests(string type = null)
     {
         Init();
+        string commandString;
+        if (type is null) commandString = "SELECT * FROM requests";
+        else commandString = $"SELECT * FROM requests WHERE type='{type}'";
         using SqlConnection connection = Database.Connection;
-        using SqlCommand getRequestsCommand = new("SELECT * FROM requests", connection);
+        using SqlCommand getRequestsCommand = new(commandString, connection);
         using SqlDataReader reader = await getRequestsCommand.ExecuteReaderAsync();
         List<RequestModel> requests = [];
         while (await reader.ReadAsync())
@@ -68,5 +71,15 @@ public class RequestsService
             $"WHERE id={request.Id}",
             connection);
         await updateRequestCommand.ExecuteNonQueryAsync();
+    }
+    public static List<string> GetTypes()
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand getTypesCommand = new("SELECT DISTINCT type FROM requests", connection);
+        using SqlDataReader reader = getTypesCommand.ExecuteReader();
+        List<string> types = ["Все"];
+        while (reader.Read()) types.Add(reader.GetString(0));
+        return types;
     }
 }

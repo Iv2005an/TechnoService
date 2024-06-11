@@ -14,14 +14,14 @@
                  TextChanging="OnTextChanging" 
                  Header="Оборудование:" 
                  PlaceholderText="Оборудование" 
-                 MaxLength="255" 
+                 MaxLength="50" 
                  TextWrapping="Wrap"
                  BorderBrush="Red"/>
             <TextBox Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}" 
                  TextChanging="OnTextChanging" 
                  Header="Тип:" 
                  PlaceholderText="Тип" 
-                 MaxLength="255" 
+                 MaxLength="50" 
                  TextWrapping="Wrap"
                  BorderBrush="Red"/>
             <TextBox Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}" 

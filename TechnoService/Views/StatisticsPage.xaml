@@ -9,14 +9,31 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Spacing="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Статистика" Style="{ThemeResource TitleTextBlockStyle}"/>
-        <ComboBox Header="Категория" PlaceholderText="Выберите категорию" Width="200">
-            <x:String>Все</x:String>
-        </ComboBox>
-        <TextBlock Text="Общее количество заявок: XXX"/>
-        <TextBlock Text="Количество выполненных заявок: XXX"/>
-        <TextBlock Text="Количество невыполненных заявок: XXX"/>
-        <TextBlock Text="Процент выполнения: XX%"/>
+    <StackPanel Spacing="8" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500">
+        <TextBlock Text="Статистика"
+                   Style="{ThemeResource TitleTextBlockStyle}"
+                   HorizontalAlignment="Center"/>
+        <ComboBox x:Name="RequestsTypesComboBox" Header="Категория"
+                  ItemsSource="{x:Bind _viewModel.RequestsTypes, Mode=TwoWay}"
+                  SelectedItem="{x:Bind _viewModel.SelectedRequestType, Mode=TwoWay}"
+                  SelectionChanged="RequestsTypesSelectionChanged"
+                  Width="500"/>
+        <StackPanel Spacing="4" Orientation="Horizontal">
+            <TextBlock Text="Общее количество заявок:"/>
+            <TextBlock Text="{x:Bind _viewModel.AllRequestsCount, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Spacing="4" Orientation="Horizontal">
+            <TextBlock Text="Количество выполненных заявок:"/>
+            <TextBlock Text="{x:Bind _viewModel.CompletedRequestsCount, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Spacing="4" Orientation="Horizontal">
+            <TextBlock Text="Количество невыполненных заявок:"/>
+            <TextBlock Text="{x:Bind _viewModel.NotCompletedRequestsCount, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Spacing="4" Orientation="Horizontal">
+            <TextBlock Text="Процент выполнения:"/>
+            <TextBlock Text="{x:Bind _viewModel.PercentOfCompletedRequests, Mode=TwoWay}"/>
+            <TextBlock Text="%"/>
+        </StackPanel>
     </StackPanel>
 </Page>
