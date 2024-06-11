@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml.Controls;
+п»їusing Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using TechnoService.Helpers;
@@ -31,11 +31,11 @@ public sealed partial class AddRequestPage : Page
     {
         string errorMessage = "";
         if (string.IsNullOrEmpty(_viewModel.Request.Device))
-            errorMessage += "Введите название оборудования\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РѕР±РѕСЂСѓРґРѕРІР°РЅРёСЏ\n";
         if (string.IsNullOrEmpty(_viewModel.Request.Type))
-            errorMessage += "Введите тип оборудования\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ С‚РёРї РѕР±РѕСЂСѓРґРѕРІР°РЅРёСЏ\n";
         if (string.IsNullOrEmpty(_viewModel.Request.Description))
-            errorMessage += "Введите описание проблемы\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ РѕРїРёСЃР°РЅРёРµ РїСЂРѕР±Р»РµРјС‹\n";
         errorMessage = errorMessage.Trim();
         if (string.IsNullOrEmpty(errorMessage))
         {
@@ -45,9 +45,9 @@ public sealed partial class AddRequestPage : Page
         await new ContentDialog()
         {
             XamlRoot = XamlRoot,
-            Title = "Ошибка",
+            Title = "РћС€РёР±РєР°",
             Content = errorMessage,
-            CloseButtonText = "Ок",
+            CloseButtonText = "РћРє",
         }.ShowAsync();
         return null;
     }

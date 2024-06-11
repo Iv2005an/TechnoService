@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml.Controls;
+п»їusing Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using TechnoService.Helpers;
@@ -36,20 +36,20 @@ public sealed partial class EditUserPage : Page
     {
         string errorMessage = "";
         if (_viewModel.User.Id == 0 && _viewModel.User.Type != UserTypes.Admin)
-            errorMessage = "Недопустима смена типа пользователя";
+            errorMessage = "РќРµРґРѕРїСѓСЃС‚РёРјР° СЃРјРµРЅР° С‚РёРїР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ";
         if (string.IsNullOrEmpty(_viewModel.User.Surname))
-            errorMessage += "Введите фамилию\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ\n";
         if (string.IsNullOrEmpty(_viewModel.User.Name))
-            errorMessage += "Введите имя\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ РёРјСЏ\n";
         errorMessage = errorMessage.Trim();
         if (!string.IsNullOrEmpty(errorMessage))
         {
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = errorMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
         }
         else
