@@ -35,6 +35,6 @@ public partial class StatisticsPageViewModel : ObservableObject
         AllRequestsCount = requests.Count;
         CompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.Completed).Count();
         NotCompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.NotCompleted).Count();
-        PercentOfCompletedRequests = 0;
+        PercentOfCompletedRequests = (int)((double)CompletedRequestsCount / AllRequestsCount * 100);
     }
 }
