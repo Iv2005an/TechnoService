@@ -48,7 +48,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\StaffPage.xaml">
+    <Page Update="Views\UsersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

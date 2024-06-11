@@ -36,7 +36,17 @@ public sealed partial class UserModel : ObservableObject
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
     public string NameWithInitials => $"{Surname} {Name[0]}. {Patronymic[0]}.";
-
+    public int TypeIndex => Convert.ToInt32(Type);
+    public string TypeName =>
+    new string[] {
+            "Клиент",
+            "Исполнитель",
+            "Админ" }[TypeIndex];
+    public bool IsSuitable(string searchText) =>
+        Id.ToString().Contains(searchText) ||
+        TypeName.Contains(searchText) ||
+        FullName.Contains(searchText) ||
+        Login.Contains(searchText);
     public override string ToString()
     {
         return FullName;

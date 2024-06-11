@@ -120,6 +120,16 @@ public static class UsersService
         using SqlDataReader reader = getUserCommand.ExecuteReader();
         return reader.Read() ? new UserModel(reader) : null;
     }
+    public static List<UserModel> GetUsers()
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand getUsersCommand = new("SELECT * FROM users", connection);
+        using SqlDataReader reader = getUsersCommand.ExecuteReader();
+        List<UserModel> users = [];
+        while (reader.Read()) users.Add(new(reader));
+        return users;
+    }
     public static List<UserModel> GetExecutors()
     {
         Init();
