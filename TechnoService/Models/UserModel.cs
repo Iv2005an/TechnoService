@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Data;
+using System.Linq;
 
 namespace TechnoService.Models;
 
@@ -35,7 +36,7 @@ public sealed partial class UserModel : ObservableObject
     private PasswordModel _password = new();
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
-    public string NameWithInitials => $"{Surname} {Name[0]}. {Patronymic[0]}.";
+    public string NameWithInitials => $"{Surname} {Name[0]} {Patronymic.ElementAtOrDefault(0)}";
     public string[] TypesNames => [
             "Клиент",
             "Исполнитель",
