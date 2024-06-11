@@ -19,7 +19,8 @@ public sealed partial class UsersPage : Page
         Frame.BackStack.Clear();
         base.OnNavigatedTo(e);
     }
-    private void EditUserClick(object sender, RoutedEventArgs e) { }
+    private void EditUserClick(object sender, RoutedEventArgs e) =>
+        Frame.Navigate(typeof(EditUserPage), UsersDataGrid.SelectedItem);
     private void UsersDataGridSorting(object sender, DataGridColumnEventArgs e)
     {
         Func<UserModel, object> sorter = null;

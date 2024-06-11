@@ -13,6 +13,9 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <DefaultLanguage>ru-RU</DefaultLanguage>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Views\EditUserPage.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
@@ -33,6 +36,10 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\EditUserPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

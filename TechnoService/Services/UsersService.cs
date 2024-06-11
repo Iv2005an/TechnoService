@@ -145,4 +145,18 @@ public static class UsersService
         while (reader.Read()) executors.Add(new(reader));
         return executors;
     }
+    public static async Task UpdateUser(UserModel user)
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand updateRequestCommand = new(
+            "UPDATE users SET " +
+            $"type='{user.TypeIndex}'," +
+            $"surname='{user.Surname}'," +
+            $"name='{user.Name}'," +
+            $"patronymic='{user.Patronymic}' " +
+            $"WHERE id={user.Id}",
+            connection);
+        await updateRequestCommand.ExecuteNonQueryAsync();
+    }
 }
