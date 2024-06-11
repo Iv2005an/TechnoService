@@ -16,7 +16,7 @@
                 <TextBlock Text="ID: "/>
                 <TextBlock Text="{x:Bind _viewModel.User.Id}"/>
             </StackPanel>
-            <ComboBox x:Name="ExecutorComboBox"  Header="Тип:"
+            <ComboBox x:Name="UserComboBox"  Header="Тип:"
                       Width="500"
                       ItemsSource="{x:Bind _viewModel.User.TypesNames}"
                       SelectedIndex="{x:Bind _viewModel.User.TypeIndex, Mode=TwoWay}"/>
