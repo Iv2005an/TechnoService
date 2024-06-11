@@ -13,12 +13,14 @@
 
     <StackPanel>
         <CommandBar DefaultLabelPosition="Right">
+            <AppBarButton x:Name="CompleteRequestButton" Icon="Like" Label="Выполнено" Click="CompleteRequestClick" IsEnabled="False"/>
+            <AppBarButton x:Name="NotCompleteRequestButton" Icon="Dislike" Label="Не выполнено" Click="NotCompleteRequestClick" IsEnabled="False"/>
             <AppBarButton x:Name="EditRequestButton" Icon="Edit" Label="Изменить" Click="EditRequestClick" IsEnabled="False"/>
             <AppBarButton Icon="Add" Label="Добавить" Click="AddRequestClick"/>
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Заявки" Margin="12,14"/>
-                    <AutoSuggestBox Width="300" Height="32"
+                    <AutoSuggestBox x:Name="SearchBox" Width="300" Height="32"
                                     PlaceholderText="Поиск по заявкам"
                                     QueryIcon="Find"
                                     TextChanged="RequestsSearchTextChanged"/>
@@ -29,6 +31,7 @@
                            ItemsSource="{x:Bind _viewModel.Requests, Mode=OneWay}"
                            AutoGenerateColumns="False"
                            Sorting="RequestsDataGridSorting"
+                           SelectedItem="{x:Bind _viewModel.SelectedRequest, Mode=TwoWay}"
                            SelectionChanged="RequestsDataGridSelectionChanged"
                            IsReadOnly="True">
             <controls:DataGrid.DataContext>

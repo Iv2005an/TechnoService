@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using TechnoService.Models;
 using TechnoService.Services;
 using TechnoService.ViewModels;
@@ -51,7 +52,18 @@ public sealed partial class RequestsPage : Page
     }
     private void EditRequestClick(object sender, RoutedEventArgs e) =>
         Frame.Navigate(typeof(EditRequestPage), RequestsDataGrid.SelectedItem);
-
+    private async void CompleteRequestClick(object sender, RoutedEventArgs e)
+    {
+        _viewModel.SelectedRequest.Status = StatusTypes.Completed;
+        await _viewModel.UpdateRequestCommand.ExecuteAsync(null);
+        SearchRequests();
+    }
+    private async void NotCompleteRequestClick(object sender, RoutedEventArgs e)
+    {
+        _viewModel.SelectedRequest.Status = StatusTypes.NotCompleted;
+        await _viewModel.UpdateRequestCommand.ExecuteAsync(null);
+        SearchRequests();
+    }
     private void RequestsDataGridSorting(object sender, DataGridColumnEventArgs e)
     {
         Func<RequestModel, object> sorter = null;
@@ -101,15 +113,36 @@ public sealed partial class RequestsPage : Page
     }
     private void RequestsDataGridSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (RequestsDataGrid.SelectedItem != null) EditRequestButton.IsEnabled = true;
-        else EditRequestButton.IsEnabled = false;
+        if (_viewModel.SelectedRequest != null)
+        {
+            EditRequestButton.IsEnabled = true;
+            if (_viewModel.SelectedRequest.Status == StatusTypes.InProgress)
+            {
+                CompleteRequestButton.IsEnabled = true;
+                NotCompleteRequestButton.IsEnabled = true;
+            }
+            else
+            {
+                CompleteRequestButton.IsEnabled = false;
+                NotCompleteRequestButton.IsEnabled = false;
+            }
+        }
+        else
+        {
+            CompleteRequestButton.IsEnabled = false;
+            NotCompleteRequestButton.IsEnabled = false;
+            EditRequestButton.IsEnabled = false;
+        }
     }
-
     private void RequestsSearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            if (!string.IsNullOrEmpty(sender.Text))
-                RequestsDataGrid.ItemsSource = new ObservableCollection<RequestModel>(_viewModel.Requests.Where((request) => request.IsSuitable(sender.Text)));
-            else RequestsDataGrid.ItemsSource = _viewModel.Requests;
+            SearchRequests();
+    }
+    private void SearchRequests()
+    {
+        if (!string.IsNullOrEmpty(SearchBox.Text))
+            RequestsDataGrid.ItemsSource = new ObservableCollection<RequestModel>(_viewModel.Requests.Where((request) => request.IsSuitable(SearchBox.Text)));
+        else RequestsDataGrid.ItemsSource = _viewModel.Requests;
     }
 }
