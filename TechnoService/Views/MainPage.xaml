@@ -12,6 +12,7 @@
     <NavigationView x:Name="NavigationView"
                     PaneDisplayMode="LeftCompact"
                     SelectionChanged="NavigationViewSelectionChanged"
+                    IsSettingsVisible="False"
                     IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
                     BackRequested="NavigationBackRequested">
         <NavigationView.MenuItems>

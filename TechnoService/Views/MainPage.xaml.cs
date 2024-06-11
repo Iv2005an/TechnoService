@@ -43,9 +43,6 @@ public sealed partial class MainPage : Page
             case "Statistics":
                 ContentFrame.Navigate(typeof(StatisticsPage));
                 break;
-            case "Settings":
-                ContentFrame.Navigate(typeof(SettingsPage));
-                break;
             default:
                 ContentFrame.Navigate(typeof(RequestsPage), _viewModel.CurrentUser);
                 break;
