@@ -63,6 +63,10 @@
                                              Header="Дата добавления"
                                              Binding="{Binding StartDate}"
                                              MinWidth="140" Width="155"/>
+                <controls:DataGridTextColumn Tag="EndDate"
+                                             Header="Дата выполнения"
+                                             Binding="{Binding EndDate}"
+                                             MinWidth="140" Width="155"/>           
                 <controls:DataGridTextColumn Tag="Client"
                                              Header="Клиент"
                                              Binding="{Binding Client.NameWithInitials}"

@@ -15,6 +15,7 @@ public class RequestsService
             "CREATE TABLE requests(" +
             "id int IDENTITY(0, 1) NOT NULL PRIMARY KEY," +
             "start_date datetime NOT NULL DEFAULT GETDATE()," +
+            "end_date datetime," +
             "client_id int NOT NULL," +
             "executor_id int NOT NULL," +
             "device nvarchar(max) NOT NULL," +
@@ -33,6 +34,7 @@ public class RequestsService
         using SqlCommand addRequestCommand = new(
             "INSERT INTO requests VALUES(" +
             $"GETDATE()," +
+            "NULL," +
             $"{request.Client.Id}," +
             $"{request.Executor.Id}," +
             $"N'{request.Device}'," +

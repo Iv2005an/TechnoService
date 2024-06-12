@@ -62,12 +62,14 @@ public sealed partial class RequestsPage : Page
     private async void CompleteRequestClick(object sender, RoutedEventArgs e)
     {
         _viewModel.SelectedRequest.Status = StatusTypes.Completed;
+        _viewModel.SelectedRequest.EndDate = DateTime.Now;
         await _viewModel.UpdateRequestCommand.ExecuteAsync(null);
         SearchRequests();
     }
     private async void NotCompleteRequestClick(object sender, RoutedEventArgs e)
     {
         _viewModel.SelectedRequest.Status = StatusTypes.NotCompleted;
+        _viewModel.SelectedRequest.EndDate = DateTime.Now;
         await _viewModel.UpdateRequestCommand.ExecuteAsync(null);
         SearchRequests();
     }
@@ -81,6 +83,9 @@ public sealed partial class RequestsPage : Page
                 break;
             case "StartDate":
                 sorter = (request) => request.StartDate;
+                break;
+            case "EndDate":
+                sorter = (request) => request.EndDate;
                 break;
             case "Client":
                 sorter = (request) => request.Client.FullName;

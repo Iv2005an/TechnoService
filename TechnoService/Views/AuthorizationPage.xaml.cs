@@ -76,8 +76,12 @@ public sealed partial class AuthorizationPage : Page
     private async void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
 #if DEBUG
-        _viewModel.CurrentUser.Login = "admin";
-        _viewModel.CurrentUser.Password.PasswordString = "Admin_1234";
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Login)
+            && string.IsNullOrEmpty(_viewModel.CurrentUser.Password.PasswordString))
+        {
+            _viewModel.CurrentUser.Login = "admin";
+            _viewModel.CurrentUser.Password.PasswordString = "Admin_1234";
+        }
 #endif
         string errorMessage = "";
         if (string.IsNullOrEmpty(_viewModel.CurrentUser.Login))
@@ -88,7 +92,8 @@ public sealed partial class AuthorizationPage : Page
             if (string.IsNullOrEmpty(_viewModel.CommandMessage))
                 errorMessage += "Логин не существует\n";
         }
-        if (!RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Password.PasswordString) ||
+            !RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +
@@ -136,7 +141,8 @@ public sealed partial class AuthorizationPage : Page
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
-        if (!RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Password.PasswordString) || 
+            !RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +
                 "  -cимволы верхнего и нижнего регистра\n" +

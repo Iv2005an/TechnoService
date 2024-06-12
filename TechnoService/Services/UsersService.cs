@@ -36,7 +36,7 @@ public static class UsersService
             password.ComputeHash(null);
             SqlCommand addAdminCommand = new(
             "INSERT INTO users VALUES(" +
-            "2," +
+            $"{Convert.ToInt32(UserTypes.Admin)}," +
             "N'Фамилия'," +
             "N'Имя'," +
             "N'Отчество'," +
@@ -45,6 +45,34 @@ public static class UsersService
             $"N'{password.Salt}');",
             connection);
             addAdminCommand.ExecuteNonQuery();
+#if DEBUG
+            password = new() { PasswordString = "Executor_1234" };
+            password.ComputeHash(null);
+            SqlCommand addExecutorCommand = new(
+            "INSERT INTO users VALUES(" +
+            $"{Convert.ToInt32(UserTypes.Executor)}," +
+            "N'Фамилия'," +
+            "N'Имя'," +
+            "N'Отчество'," +
+            "N'executor'," +
+            $"N'{password.Hash}'," +
+            $"N'{password.Salt}');",
+            connection);
+            addExecutorCommand.ExecuteNonQuery();
+            password = new() { PasswordString = "Client_1234" };
+            password.ComputeHash(null);
+            SqlCommand addClientCommand = new(
+            "INSERT INTO users VALUES(" +
+            $"{Convert.ToInt32(UserTypes.Client)}," +
+            "N'Фамилия'," +
+            "N'Имя'," +
+            "N'Отчество'," +
+            "N'client'," +
+            $"N'{password.Hash}'," +
+            $"N'{password.Salt}');",
+            connection);
+            addClientCommand.ExecuteNonQuery();
+#endif
         }
     }
     public static async Task<bool> IsLoginFree(string login)

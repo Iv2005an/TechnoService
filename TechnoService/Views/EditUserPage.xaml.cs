@@ -35,7 +35,7 @@ public sealed partial class EditUserPage : Page
     {
         string errorMessage = "";
         if (_viewModel.User.Id == 0 && _viewModel.User.Type != UserTypes.Admin)
-            errorMessage = "Недопустима смена типа пользователя главному администратору";
+            errorMessage = "Недопустима смена типа пользователя главному администратору\n";
         if (string.IsNullOrEmpty(_viewModel.User.Surname))
             errorMessage += "Введите фамилию\n";
         if (string.IsNullOrEmpty(_viewModel.User.Name))

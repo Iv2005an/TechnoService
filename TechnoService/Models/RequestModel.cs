@@ -12,18 +12,21 @@ public partial class RequestModel : ObservableObject
     {
         Id = record.GetInt32(0);
         StartDate = record.GetDateTime(1);
-        Client = UsersService.GetUser(record.GetInt32(2));
-        Executor = UsersService.GetUser(record.GetInt32(3));
-        Device = record.GetString(4);
-        Type = record.GetString(5);
-        Description = record.GetString(6);
-        Status = (StatusTypes)Enum.GetValues(typeof(StatusTypes)).GetValue(record.GetByte(7));
+        if (!record.IsDBNull(2)) EndDate = record.GetDateTime(2);
+        Client = UsersService.GetUser(record.GetInt32(3));
+        Executor = UsersService.GetUser(record.GetInt32(4));
+        Device = record.GetString(5);
+        Type = record.GetString(6);
+        Description = record.GetString(7);
+        Status = (StatusTypes)Enum.GetValues(typeof(StatusTypes)).GetValue(record.GetByte(8));
     }
 
     [ObservableProperty]
     public int _id;
     [ObservableProperty]
     public DateTime _startDate;
+    [ObservableProperty]
+    public DateTime _endDate;
     [ObservableProperty]
     public UserModel _client;
     [ObservableProperty]
@@ -48,6 +51,7 @@ public partial class RequestModel : ObservableObject
     public bool IsSuitable(string searchText) =>
         Id.ToString().Contains(searchText) ||
         StartDate.ToString().Contains(searchText) ||
+        EndDate.ToString().Contains(searchText) ||
         Client.FullName.Contains(searchText) ||
         Executor.FullName.Contains(searchText) ||
         Device.Contains(searchText) ||
