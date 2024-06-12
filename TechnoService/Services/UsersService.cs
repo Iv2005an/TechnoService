@@ -83,7 +83,7 @@ public static class UsersService
         using SqlCommand getSaltCommand = new(
             $"SELECT salt " +
             $"FROM users " +
-            $"WHERE login=N'{user.Login}'", connection);
+            $"WHERE login=N'{user.Login}';", connection);
         using (SqlDataReader saltReader = await getSaltCommand.ExecuteReaderAsync())
         {
             if (await saltReader.ReadAsync())
@@ -94,7 +94,7 @@ public static class UsersService
             $"SELECT * " +
             $"FROM users " +
             $"WHERE login=N'{user.Login}' AND " +
-            $"password=N'{user.Password.Hash}'",
+            $"password=N'{user.Password.Hash}';",
             connection);
         using SqlDataReader userReader = await getUserCommand.ExecuteReaderAsync();
         if (await userReader.ReadAsync())
@@ -115,7 +115,7 @@ public static class UsersService
         using SqlCommand getUserCommand = new(
             "SELECT * " +
             "FROM users " +
-            $"WHERE id={id}",
+            $"WHERE id={id};",
             connection);
         using SqlDataReader reader = getUserCommand.ExecuteReader();
         return reader.Read() ? new UserModel(reader) : null;
@@ -124,7 +124,7 @@ public static class UsersService
     {
         Init();
         using SqlConnection connection = Database.Connection;
-        using SqlCommand getUsersCommand = new("SELECT * FROM users", connection);
+        using SqlCommand getUsersCommand = new("SELECT * FROM users;", connection);
         using SqlDataReader reader = getUsersCommand.ExecuteReader();
         List<UserModel> users = [];
         while (reader.Read()) users.Add(new(reader));
@@ -138,7 +138,7 @@ public static class UsersService
             "SELECT * " +
             "FROM users " +
             $"WHERE type={Convert.ToInt32(UserTypes.Admin)}" +
-            $"OR type={Convert.ToInt32(UserTypes.Executor)}",
+            $"OR type={Convert.ToInt32(UserTypes.Executor)};",
             connection);
         using SqlDataReader reader = getExecutorsCommand.ExecuteReader();
         List<UserModel> executors = [];
@@ -152,10 +152,10 @@ public static class UsersService
         using SqlCommand updateRequestCommand = new(
             "UPDATE users SET " +
             $"type='{user.TypeIndex}'," +
-            $"surname='{user.Surname}'," +
-            $"name='{user.Name}'," +
-            $"patronymic='{user.Patronymic}' " +
-            $"WHERE id={user.Id}",
+            $"surname=N'{user.Surname}'," +
+            $"name=N'{user.Name}'," +
+            $"patronymic=N'{user.Patronymic}' " +
+            $"WHERE id={user.Id};",
             connection);
         await updateRequestCommand.ExecuteNonQueryAsync();
     }

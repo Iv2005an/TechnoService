@@ -26,10 +26,10 @@ public partial class RequestsPageViewModel : ObservableObject
     {
         if (CurrentUser.Type == UserTypes.Client)
             Requests = new(await RequestsService.GetRequests(
-                $"client_id={CurrentUser.Id}"));
+                $"client_id={CurrentUser.Id};"));
         else if (CurrentUser.Type == UserTypes.Executor)
             Requests = new(await RequestsService.GetRequests(
-                $"client_id={CurrentUser.Id} OR executor_id={CurrentUser.Id}"));
+                $"client_id={CurrentUser.Id} OR executor_id={CurrentUser.Id};"));
         else
             Requests = new(await RequestsService.GetRequests());
     }

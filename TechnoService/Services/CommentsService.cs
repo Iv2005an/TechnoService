@@ -44,7 +44,7 @@ public static class CommentsService
             $"{newComment.Request.Id}," +
             $"{newComment.Sender.Id}," +
             $"GETDATE()," +
-            $"'{newComment.Text}');",
+            $"N'{newComment.Text}');",
             connection);
         await insertCommentCommand.ExecuteNonQueryAsync();
     }

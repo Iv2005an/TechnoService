@@ -35,9 +35,9 @@ public class RequestsService
             $"GETDATE()," +
             $"{request.Client.Id}," +
             $"{request.Executor.Id}," +
-            $"'{request.Device}'," +
-            $"'{request.Type}'," +
-            $"'{request.Description}'," +
+            $"N'{request.Device}'," +
+            $"N'{request.Type}'," +
+            $"N'{request.Description}'," +
             $"{request.StatusIndex});", connection);
         await addRequestCommand.ExecuteNonQueryAsync();
     }
@@ -65,7 +65,7 @@ public class RequestsService
         using SqlCommand getRequestCommand = new(
             "SELECT * " +
             "FROM requests " +
-            $"WHERE id={id}",
+            $"WHERE id={id};",
             connection);
         using SqlDataReader reader = getRequestCommand.ExecuteReader();
         return reader.Read() ? new RequestModel(reader) : null;
@@ -79,11 +79,11 @@ public class RequestsService
             $"start_date='{request.StartDate}'," +
             $"client_id={request.Client.Id}," +
             $"executor_id={request.Executor.Id}," +
-            $"device='{request.Device}'," +
-            $"type='{request.Type}'," +
-            $"description='{request.Description}'," +
+            $"device=N'{request.Device}'," +
+            $"type=N'{request.Type}'," +
+            $"description=N'{request.Description}'," +
             $"status={request.StatusIndex} " +
-            $"WHERE id={request.Id}",
+            $"WHERE id={request.Id};",
             connection);
         await updateRequestCommand.ExecuteNonQueryAsync();
     }
@@ -91,7 +91,7 @@ public class RequestsService
     {
         Init();
         using SqlConnection connection = Database.Connection;
-        using SqlCommand getTypesCommand = new("SELECT DISTINCT type FROM requests", connection);
+        using SqlCommand getTypesCommand = new("SELECT DISTINCT type FROM requests;", connection);
         using SqlDataReader reader = getTypesCommand.ExecuteReader();
         List<string> types = ["Все"];
         while (reader.Read()) types.Add(reader.GetString(0));

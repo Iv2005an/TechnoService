@@ -9,7 +9,7 @@ public static class Database
         $"IF NOT EXISTS(" +
         $"SELECT name " +
         $"FROM sys.databases " +
-        $"WHERE name = '{_databaseName}') " +
+        $"WHERE name='{_databaseName}') " +
         $"BEGIN " +
         $"CREATE DATABASE {_databaseName}; " +
         $"END";
