@@ -25,7 +25,7 @@
             </CommandBar.Content>
         </CommandBar>
         <controls:DataGrid x:Name="UsersDataGrid"
-                           ItemsSource="{x:Bind _viewModel.Users}" 
+                           ItemsSource="{x:Bind _viewModel.Users, Mode=OneWay}" 
                            AutoGenerateColumns="False"
                            Sorting="UsersDataGridSorting"
                            SelectionChanged="UsersDataGridSelectionChanged"
