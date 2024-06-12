@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using TechnoService.Models;
 using TechnoService.Services;
 using TechnoService.ViewModels;
@@ -51,7 +50,13 @@ public sealed partial class RequestsPage : Page
         }
     }
     private void EditRequestClick(object sender, RoutedEventArgs e) =>
-        Frame.Navigate(typeof(EditRequestPage), RequestsDataGrid.SelectedItem);
+        Frame.Navigate(typeof(EditRequestPage), _viewModel.SelectedRequest);
+    private void CommentsRequestClick(object sender, RoutedEventArgs e) =>
+        Frame.Navigate(typeof(CommentsRequestPage), new CommentModel()
+        {
+            Sender = _viewModel.CurrentUser,
+            Request = _viewModel.SelectedRequest
+        });
     private async void CompleteRequestClick(object sender, RoutedEventArgs e)
     {
         _viewModel.SelectedRequest.Status = StatusTypes.Completed;
@@ -115,6 +120,7 @@ public sealed partial class RequestsPage : Page
     {
         if (_viewModel.SelectedRequest != null)
         {
+            CommentsRequestButton.IsEnabled = true;
             EditRequestButton.IsEnabled = true;
             if (_viewModel.SelectedRequest.Status == StatusTypes.InProgress)
             {
@@ -131,6 +137,7 @@ public sealed partial class RequestsPage : Page
         {
             CompleteRequestButton.IsEnabled = false;
             NotCompleteRequestButton.IsEnabled = false;
+            CommentsRequestButton.IsEnabled = false;
             EditRequestButton.IsEnabled = false;
         }
     }

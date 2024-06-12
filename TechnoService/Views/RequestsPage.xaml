@@ -13,9 +13,26 @@
 
     <StackPanel>
         <CommandBar DefaultLabelPosition="Right">
-            <AppBarButton x:Name="CompleteRequestButton" Icon="Like" Label="Выполнено" Click="CompleteRequestClick" IsEnabled="False"/>
-            <AppBarButton x:Name="NotCompleteRequestButton" Icon="Dislike" Label="Не выполнено" Click="NotCompleteRequestClick" IsEnabled="False"/>
-            <AppBarButton x:Name="EditRequestButton" Icon="Edit" Label="Изменить" Click="EditRequestClick" IsEnabled="False"/>
+            <AppBarButton x:Name="CompleteRequestButton"
+                          Icon="Like"
+                          Label="Выполнено"
+                          Click="CompleteRequestClick"
+                          IsEnabled="False"/>
+            <AppBarButton x:Name="NotCompleteRequestButton"
+                          Icon="Dislike"
+                          Label="Не выполнено"
+                          Click="NotCompleteRequestClick"
+                          IsEnabled="False"/>
+            <AppBarButton x:Name="CommentsRequestButton"
+                          Icon="Comment"
+                          Label="Комментарии"
+                          Click="CommentsRequestClick"
+                          IsEnabled="False"/>
+            <AppBarButton x:Name="EditRequestButton"
+                          Icon="Edit"
+                          Label="Изменить"
+                          Click="EditRequestClick"
+                          IsEnabled="False"/>
             <AppBarButton Icon="Add" Label="Добавить" Click="AddRequestClick"/>
             <CommandBar.Content>
                 <StackPanel Orientation="Horizontal">

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using TechnoService.Helpers;
@@ -28,11 +29,11 @@ public sealed partial class EditUserPage : Page
             sender.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
     }
 
-    private void CancelButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void CancelButtonClick(object sender, RoutedEventArgs e)
     {
         if (Frame.CanGoBack) Frame.GoBack();
     }
-    private async void EditButtonClick(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void EditButtonClick(object sender, RoutedEventArgs e)
     {
         string errorMessage = "";
         if (_viewModel.User.Id == 0 && _viewModel.User.Type != UserTypes.Admin)

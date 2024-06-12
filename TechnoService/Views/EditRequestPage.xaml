@@ -22,7 +22,7 @@
             </StackPanel>
             <StackPanel Spacing="4" Orientation="Horizontal">
                 <TextBlock Text="Клиент:"/>
-                <TextBlock Text="{x:Bind _viewModel.Request.Client.NameWithInitials}"/>
+                <TextBlock Text="{x:Bind _viewModel.Request.Client.FullName}"/>
             </StackPanel>
             <ComboBox x:Name="ExecutorComboBox"  Header="Исполнитель:"
                       Width="500"

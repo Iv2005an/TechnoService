@@ -55,6 +55,18 @@ public class RequestsService
             requests.Add(new(reader));
         return requests;
     }
+    public static RequestModel GetRequest(int id)
+    {
+        Init();
+        using SqlConnection connection = Database.Connection;
+        using SqlCommand getRequestCommand = new(
+            "SELECT * " +
+            "FROM requests " +
+            $"WHERE id={id}",
+            connection);
+        using SqlDataReader reader = getRequestCommand.ExecuteReader();
+        return reader.Read() ? new RequestModel(reader) : null;
+    }
     public static async Task UpdateRequest(RequestModel request)
     {
         Init();

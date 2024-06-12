@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TechnoService.Views.CommentsRequestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TechnoService.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:TechnoService.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Spacing="8" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Информация о заявке" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center"/>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="ID: "/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Id}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Дата добавления:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.StartDate}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Клиент:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Client.FullName}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Исполнитель:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Executor.NameWithInitials}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Оборудование:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Device}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Тип:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Type}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Описание:"/>
+                <TextBlock Text="{x:Bind _viewModel.NewComment.Request.Description}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Статус:"/>
+                <TextBlock x:Name="Status" Text="{x:Bind _viewModel.NewComment.Request.StatusName}"/>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Комментарии"
+                       Style="{ThemeResource TitleTextBlockStyle}"
+                       HorizontalAlignment="Center"/>
+            <ListView Grid.Row="1"
+                      x:Name="CommentsListView"
+                      ItemsSource="{x:Bind _viewModel.Comments, Mode=OneWay}"
+                      SelectionMode="None">
+                <ListView.DataContext>
+                    <models:CommentModel/>
+                </ListView.DataContext>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,8" Padding="8" Background="LightGray" CornerRadius="8">
+                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Foreground="Black"/>
+                            <StackPanel Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Sender.FullName}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="Black"/>
+                                <TextBlock Text="{Binding SendDate}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="Black"/>
+                            </StackPanel>
+                            </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="2" Margin="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{x:Bind _viewModel.NewComment.Text, Mode=TwoWay}"
+                         Margin="0,0,4,0"
+                         MaxLength="1024" 
+                         TextChanging="OnTextChanging" 
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         BorderBrush="Red"/>
+                <Button Grid.Column="1" 
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        Click="SendButtonClick">
+                    <SymbolIcon Symbol="Send"/>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
