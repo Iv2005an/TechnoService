@@ -84,6 +84,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Text="{x:Bind _viewModel.NewComment.Text, Mode=TwoWay}"
+                         PlaceholderText="Введите комментарий"
                          Margin="0,0,4,0"
                          MaxLength="1024" 
                          TextChanging="OnTextChanging" 

@@ -12,7 +12,6 @@ namespace TechnoService.Views;
 public sealed partial class EditUserPage : Page
 {
     public EditUserPage() => InitializeComponent();
-
     private readonly EditUserPageViewModel _viewModel = new();
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
@@ -22,13 +21,12 @@ public sealed partial class EditUserPage : Page
     }
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
     {
-        TextHelper.TextCharsChecker(sender);
-        if (sender.Text.Length > 0)
+        TextHelper.NameCharsChecker(sender, RegexHelper.NameCharsRegex());
+        if (sender.Name == "PatronymicBox" || sender.Text.Length > 0)
             sender.BorderBrush = BorderBrushes.TextBoxDefaultBorderBrush;
         else
             sender.BorderBrush = BorderBrushes.TextBoxUncorrectBorderBrush;
     }
-
     private void CancelButtonClick(object sender, RoutedEventArgs e)
     {
         if (Frame.CanGoBack) Frame.GoBack();
@@ -37,7 +35,7 @@ public sealed partial class EditUserPage : Page
     {
         string errorMessage = "";
         if (_viewModel.User.Id == 0 && _viewModel.User.Type != UserTypes.Admin)
-            errorMessage = "Недопустима смена типа пользователя";
+            errorMessage = "Недопустима смена типа пользователя главному администратору";
         if (string.IsNullOrEmpty(_viewModel.User.Surname))
             errorMessage += "Введите фамилию\n";
         if (string.IsNullOrEmpty(_viewModel.User.Name))

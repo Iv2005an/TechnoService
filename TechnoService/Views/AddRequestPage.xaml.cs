@@ -30,10 +30,13 @@ public sealed partial class AddRequestPage : Page
     public async Task<RequestModel> AddRequest()
     {
         string errorMessage = "";
+        _viewModel.Request.Device = _viewModel.Request.Device?.Trim();
         if (string.IsNullOrEmpty(_viewModel.Request.Device))
             errorMessage += "Введите название оборудования\n";
+        _viewModel.Request.Type = _viewModel.Request.Type?.Trim();
         if (string.IsNullOrEmpty(_viewModel.Request.Type))
             errorMessage += "Введите тип оборудования\n";
+        _viewModel.Request.Description = _viewModel.Request.Description?.Trim();
         if (string.IsNullOrEmpty(_viewModel.Request.Description))
             errorMessage += "Введите описание проблемы\n";
         errorMessage = errorMessage.Trim();

@@ -26,8 +26,10 @@
             <TextBox Header="Имя:" 
                      Text="{x:Bind _viewModel.User.Name, Mode=TwoWay}"
                      TextChanging="OnTextChanging"/>
-            <TextBox Header="Отчество:"
-                     Text="{x:Bind _viewModel.User.Patronymic, Mode=TwoWay}"/>
+            <TextBox x:Name="PatronymicBox"
+                     Header="Отчество:"
+                     Text="{x:Bind _viewModel.User.Patronymic, Mode=TwoWay}"
+                     TextChanging="OnTextChanging"/>
             <StackPanel Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Отмена" Width="100" Click="CancelButtonClick"/>
                 <Button Grid.Column="1" 

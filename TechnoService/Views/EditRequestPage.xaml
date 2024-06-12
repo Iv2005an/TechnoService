@@ -33,14 +33,12 @@
                      Text="{x:Bind _viewModel.Request.Device, Mode=TwoWay}"
                      MaxLength="50" 
                      TextChanging="OnTextChanging" 
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"/>
+                     TextWrapping="Wrap"/>
             <TextBox Header="Тип:" 
                      Text="{x:Bind _viewModel.Request.Type, Mode=TwoWay}"
                      MaxLength="50" 
                      TextChanging="OnTextChanging" 
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"/>
+                     TextWrapping="Wrap"/>
             <TextBox Header="Описание:"
                      Text="{x:Bind _viewModel.Request.Description, Mode=TwoWay}"
                      MaxLength="1024" 
