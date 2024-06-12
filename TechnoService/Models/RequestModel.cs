@@ -26,7 +26,7 @@ public partial class RequestModel : ObservableObject
     [ObservableProperty]
     public DateTime _startDate;
     [ObservableProperty]
-    public DateTime _endDate;
+    public DateTime? _endDate;
     [ObservableProperty]
     public UserModel _client;
     [ObservableProperty]

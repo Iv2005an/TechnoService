@@ -21,6 +21,10 @@
                 <TextBlock Text="{x:Bind _viewModel.Request.StartDate}"/>
             </StackPanel>
             <StackPanel Spacing="4" Orientation="Horizontal">
+                <TextBlock Text="Дата выполнения:"/>
+                <TextBlock Text="{x:Bind _viewModel.Request.EndDate}"/>
+            </StackPanel>
+            <StackPanel Spacing="4" Orientation="Horizontal">
                 <TextBlock Text="Клиент:"/>
                 <TextBlock Text="{x:Bind _viewModel.Request.Client.FullName}"/>
             </StackPanel>

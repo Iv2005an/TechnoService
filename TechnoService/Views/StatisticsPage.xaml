@@ -14,26 +14,30 @@
                    Style="{ThemeResource TitleTextBlockStyle}"
                    HorizontalAlignment="Center"/>
         <ComboBox x:Name="RequestsTypesComboBox" Header="Категория"
-                  ItemsSource="{x:Bind _viewModel.RequestsTypes, Mode=TwoWay}"
+                  ItemsSource="{x:Bind _viewModel.RequestsTypes, Mode=OneWay}"
                   SelectedItem="{x:Bind _viewModel.SelectedRequestType, Mode=TwoWay}"
                   SelectionChanged="RequestsTypesSelectionChanged"
                   Width="500"/>
         <StackPanel Spacing="4" Orientation="Horizontal">
             <TextBlock Text="Общее количество заявок:"/>
-            <TextBlock Text="{x:Bind _viewModel.AllRequestsCount, Mode=TwoWay}"/>
+            <TextBlock Text="{x:Bind _viewModel.AllRequestsCount, Mode=OneWay}"/>
         </StackPanel>
         <StackPanel Spacing="4" Orientation="Horizontal">
             <TextBlock Text="Количество выполненных заявок:"/>
-            <TextBlock Text="{x:Bind _viewModel.CompletedRequestsCount, Mode=TwoWay}"/>
+            <TextBlock Text="{x:Bind _viewModel.CompletedRequestsCount, Mode=OneWay}"/>
         </StackPanel>
         <StackPanel Spacing="4" Orientation="Horizontal">
             <TextBlock Text="Количество невыполненных заявок:"/>
-            <TextBlock Text="{x:Bind _viewModel.NotCompletedRequestsCount, Mode=TwoWay}"/>
+            <TextBlock Text="{x:Bind _viewModel.NotCompletedRequestsCount, Mode=OneWay}"/>
         </StackPanel>
         <StackPanel Spacing="4" Orientation="Horizontal">
             <TextBlock Text="Процент выполнения:"/>
-            <TextBlock Text="{x:Bind _viewModel.PercentOfCompletedRequests, Mode=TwoWay}"/>
+            <TextBlock Text="{x:Bind _viewModel.PercentOfCompletedRequests, Mode=OneWay}"/>
             <TextBlock Text="%"/>
+        </StackPanel>
+        <StackPanel Spacing="4" Orientation="Horizontal">
+            <TextBlock Text="Среднее время выполнения:"/>
+            <TextBlock Text="{x:Bind _viewModel.AverageExecutionTime, Mode=OneWay}"/>
         </StackPanel>
     </StackPanel>
 </Page>

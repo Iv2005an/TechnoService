@@ -9,7 +9,7 @@
     xmlns:winex="using:WinUIEx"
     mc:Ignorable="d"
     Title="Техносервис"
-    Width="1280"
+    Width="1440"
     Height="720"
     MinWidth="640"
     MinHeight="480">

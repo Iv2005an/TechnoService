@@ -79,6 +79,7 @@ public class RequestsService
         using SqlCommand updateRequestCommand = new(
             "UPDATE requests SET " +
             $"start_date='{request.StartDate}'," +
+            $"end_date={(request.EndDate is null ? "NULL": $"'{request.EndDate}'")}," +
             $"client_id={request.Client.Id}," +
             $"executor_id={request.Executor.Id}," +
             $"device=N'{request.Device}'," +
