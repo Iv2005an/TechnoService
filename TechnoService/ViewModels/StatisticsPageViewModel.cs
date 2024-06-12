@@ -22,7 +22,7 @@ public partial class StatisticsPageViewModel : ObservableObject
     [ObservableProperty]
     private int _notCompletedRequestsCount;
     [ObservableProperty]
-    private int _percentOfCompletedRequests;
+    private int _percentOfCompletedRequests = 0;
 
     [RelayCommand]
     private async Task ComputeStatistics()
@@ -35,6 +35,7 @@ public partial class StatisticsPageViewModel : ObservableObject
         AllRequestsCount = requests.Count;
         CompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.Completed).Count();
         NotCompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.NotCompleted).Count();
-        PercentOfCompletedRequests = (int)((double)CompletedRequestsCount / AllRequestsCount * 100);
+        if (AllRequestsCount > 0)
+            PercentOfCompletedRequests = (int)((double)CompletedRequestsCount / AllRequestsCount * 100);
     }
 }
