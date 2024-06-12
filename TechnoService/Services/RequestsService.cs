@@ -41,12 +41,15 @@ public class RequestsService
             $"{request.StatusIndex});", connection);
         await addRequestCommand.ExecuteNonQueryAsync();
     }
-    public static async Task<List<RequestModel>> GetRequests(string type = null)
+    public static async Task<List<RequestModel>> GetRequests(string condition = null)
     {
         Init();
-        string commandString;
-        if (type is null) commandString = "SELECT * FROM requests";
-        else commandString = $"SELECT * FROM requests WHERE type='{type}'";
+        string commandString = "SELECT * FROM requests";
+        if (!string.IsNullOrEmpty(condition))
+        {
+            commandString += " WHERE ";
+            commandString += condition;
+        }
         using SqlConnection connection = Database.Connection;
         using SqlCommand getRequestsCommand = new(commandString, connection);
         using SqlDataReader reader = await getRequestsCommand.ExecuteReaderAsync();

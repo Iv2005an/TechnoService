@@ -20,14 +20,16 @@ public sealed partial class RequestsPage : Page
         Frame.BackStack.Clear();
         UserModel currentUser = (UserModel)e.Parameter;
         _viewModel.CurrentUser = currentUser;
-        _viewModel.Requests = new(await RequestsService.GetRequests());
+        await _viewModel.GetRequestsCommand.ExecuteAsync(null);
         switch (currentUser.Type)
         {
             case UserTypes.Client:
+                EditRequestButton.Visibility = Visibility.Collapsed;
+                CompleteRequestButton.Visibility = Visibility.Collapsed;
+                NotCompleteRequestButton.Visibility = Visibility.Collapsed;
                 break;
             case UserTypes.Executor:
-                break;
-            case UserTypes.Admin:
+                EditRequestButton.Visibility = Visibility.Collapsed;
                 break;
         }
         base.OnNavigatedTo(e);
@@ -46,7 +48,7 @@ public sealed partial class RequestsPage : Page
         }.ShowAsync() == ContentDialogResult.Primary)
         {
             await addRequestPage.AddRequest();
-            _viewModel.Requests = new(await RequestsService.GetRequests());
+            await _viewModel.GetRequestsCommand.ExecuteAsync(null);
         }
     }
     private void EditRequestClick(object sender, RoutedEventArgs e) =>

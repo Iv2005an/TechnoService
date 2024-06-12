@@ -19,6 +19,10 @@ public sealed partial class CommentsRequestPage : Page
     {
         _viewModel.NewComment = (CommentModel)e.Parameter;
         _viewModel.Comments = new(CommentsService.GetComments(_viewModel.NewComment.Request.Id));
+        if (_viewModel.NewComment.Sender.Type == UserTypes.Client)
+        {
+            SendCommentsField.Visibility = Visibility.Collapsed;
+        }
         base.OnNavigatedTo(e);
     }
     private void OnTextChanging(TextBox sender, TextBoxTextChangingEventArgs args)

@@ -15,11 +15,8 @@ public sealed partial class MainPage : Page
         _viewModel.CurrentUser = currentUser;
         switch (currentUser.Type)
         {
-            case UserTypes.Client:
+            case UserTypes.Client or UserTypes.Executor:
                 StaffMenuItem.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                StatisticsMenuItem.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                break;
-            case UserTypes.Executor:
                 StatisticsMenuItem.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 break;
         }

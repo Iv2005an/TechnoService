@@ -31,7 +31,7 @@ public partial class StatisticsPageViewModel : ObservableObject
         if (SelectedRequestType == "Все")
             requests = await RequestsService.GetRequests();
         else
-            requests = await RequestsService.GetRequests(SelectedRequestType);
+            requests = await RequestsService.GetRequests($"type='{SelectedRequestType}'");
         AllRequestsCount = requests.Count;
         CompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.Completed).Count();
         NotCompletedRequestsCount = requests.Where((request) => request.Status == StatusTypes.NotCompleted).Count();

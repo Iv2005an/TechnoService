@@ -78,7 +78,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Grid.Row="2" Margin="16">
+            <Grid x:Name="SendCommentsField" Grid.Row="2" Margin="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
