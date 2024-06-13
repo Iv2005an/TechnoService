@@ -33,7 +33,7 @@ public static class UsersService
         if (isAdminNotCreated)
         {
             PasswordModel password = new() { PasswordString = "Admin_1234" };
-            password.ComputeHash(null);
+            password.ComputeHash();
             SqlCommand addAdminCommand = new(
             "INSERT INTO users VALUES(" +
             $"{Convert.ToInt32(UserTypes.Admin)}," +
@@ -47,7 +47,7 @@ public static class UsersService
             addAdminCommand.ExecuteNonQuery();
 #if DEBUG
             password = new() { PasswordString = "Executor_1234" };
-            password.ComputeHash(null);
+            password.ComputeHash();
             SqlCommand addExecutorCommand = new(
             "INSERT INTO users VALUES(" +
             $"{Convert.ToInt32(UserTypes.Executor)}," +
@@ -60,7 +60,7 @@ public static class UsersService
             connection);
             addExecutorCommand.ExecuteNonQuery();
             password = new() { PasswordString = "Client_1234" };
-            password.ComputeHash(null);
+            password.ComputeHash();
             SqlCommand addClientCommand = new(
             "INSERT INTO users VALUES(" +
             $"{Convert.ToInt32(UserTypes.Client)}," +
@@ -88,7 +88,7 @@ public static class UsersService
     {
         Init();
         if (!await IsLoginFree(user.Login)) return "Логин занят";
-        user.Password.ComputeHash(null);
+        user.Password.ComputeHash();
         using SqlConnection connection = Database.Connection;
         using SqlCommand registerCommand = new(
             "INSERT INTO USERS VALUES(" +
@@ -182,7 +182,9 @@ public static class UsersService
             $"type='{user.TypeIndex}'," +
             $"surname=N'{user.Surname}'," +
             $"name=N'{user.Name}'," +
-            $"patronymic=N'{user.Patronymic}' " +
+            $"patronymic=N'{user.Patronymic}'," +
+            $"password=N'{user.Password.Hash}'," +
+            $"salt=N'{user.Password.Salt}' " +
             $"WHERE id={user.Id};",
             connection);
         await updateRequestCommand.ExecuteNonQueryAsync();

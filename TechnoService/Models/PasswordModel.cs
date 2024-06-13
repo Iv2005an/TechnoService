@@ -30,7 +30,7 @@ public partial class PasswordModel : ObservableObject
 
         return Convert.ToHexString(SHA512.HashData(saltedStrBytes));
     }
-    public void ComputeHash(string salt)
+    public void ComputeHash(string salt = null)
     {
         Salt = salt ?? GetSalt();
         Hash = GetSHA512Hash(PasswordString, Salt);
