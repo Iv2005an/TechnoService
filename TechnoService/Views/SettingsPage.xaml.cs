@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+п»їusing Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -42,24 +42,24 @@ public sealed partial class SettingsPage : Page
     {
         string errorMessage = "";
         if (string.IsNullOrEmpty(_viewModel.CurrentUser.Surname))
-            errorMessage += "Введите фамилию\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ\n";
         if (string.IsNullOrEmpty(_viewModel.CurrentUser.Name))
-            errorMessage += "Введите имя\n";
+            errorMessage += "Р’РІРµРґРёС‚Рµ РёРјСЏ\n";
         if (!string.IsNullOrEmpty(_viewModel.NewPassword))
         {
             bool passwordError = false;
             if (_viewModel.NewPassword != RepeatPasswordBox.Password)
             {
-                errorMessage += "Пароли не совпадают\n";
+                errorMessage += "РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚\n";
                 passwordError = true;
             }
             if (!RegexHelper.PasswordRegex().IsMatch(_viewModel.NewPassword))
             {
-                errorMessage += "Пароль не соответствует требованиям:\n" +
-                    "  -минимум 8 символов\n" +
-                    "  -cимволы верхнего и нижнего регистра\n" +
-                    "  -цифры\n" +
-                    "  -специальные символы(#?!@$%^&*-)\n";
+                errorMessage += "РџР°СЂРѕР»СЊ РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏРј:\n" +
+                    "  -РјРёРЅРёРјСѓРј 8 СЃРёРјРІРѕР»РѕРІ\n" +
+                    "  -cРёРјРІРѕР»С‹ РІРµСЂС…РЅРµРіРѕ Рё РЅРёР¶РЅРµРіРѕ СЂРµРіРёСЃС‚СЂР°\n" +
+                    "  -С†РёС„СЂС‹\n" +
+                    "  -СЃРїРµС†РёР°Р»СЊРЅС‹Рµ СЃРёРјРІРѕР»С‹(#?!@$%^&*-)\n";
                 passwordError = true;
             }
             if (!passwordError)
@@ -76,9 +76,9 @@ public sealed partial class SettingsPage : Page
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Ошибка",
+                Title = "РћС€РёР±РєР°",
                 Content = errorMessage,
-                CloseButtonText = "Ок",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
         }
         else
@@ -87,9 +87,9 @@ public sealed partial class SettingsPage : Page
             await new ContentDialog()
             {
                 XamlRoot = XamlRoot,
-                Title = "Успешно",
-                Content = "Данные изменены",
-                CloseButtonText = "Ок",
+                Title = "РЈСЃРїРµС€РЅРѕ",
+                Content = "Р”Р°РЅРЅС‹Рµ РёР·РјРµРЅРµРЅС‹",
+                CloseButtonText = "РћРє",
             }.ShowAsync();
         }
     }

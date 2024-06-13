@@ -141,7 +141,7 @@ public sealed partial class AuthorizationPage : Page
             await _viewModel.IsLoginFreeCommand.ExecuteAsync(null);
             errorMessage += _viewModel.CommandMessage ?? "";
         }
-        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Password.PasswordString) || 
+        if (string.IsNullOrEmpty(_viewModel.CurrentUser.Password.PasswordString) ||
             !RegexHelper.PasswordRegex().IsMatch(_viewModel.CurrentUser.Password.PasswordString))
             errorMessage += "Пароль не соответствует требованиям:\n" +
                 "  -минимум 8 символов\n" +

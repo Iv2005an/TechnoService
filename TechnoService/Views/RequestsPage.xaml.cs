@@ -6,7 +6,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using TechnoService.Models;
-using TechnoService.Services;
 using TechnoService.ViewModels;
 
 namespace TechnoService.Views;

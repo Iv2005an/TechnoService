@@ -22,6 +22,6 @@ public partial class SettingsPageViewModel : ObservableObject
         else CommandMessage = "Логин занят\n";
     }
     [RelayCommand]
-    private async Task UpdateUser() => 
+    private async Task UpdateUser() =>
         await UsersService.UpdateUser(CurrentUser);
 }
